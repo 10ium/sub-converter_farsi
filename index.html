@@ -112,8 +112,9 @@
 
         .checkbox-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
+            /* Adjust grid to fit more columns */
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 12px; /* Slightly increase gap */
             margin-top: 10px;
             text-align: right;
         }
@@ -126,16 +127,17 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.2s;
-            justify-content: flex-end;
+            justify-content: flex-end; /* Keep text to the right */
+            font-size: 0.9em; /* Slightly smaller font if needed */
         }
          .checkbox-group label:hover {
             background-color: #4a4a4a;
          }
 
         .checkbox-group input[type="checkbox"] {
-            margin-left: 10px;
+            margin-left: 10px; /* Keep space */
             margin-right: 0;
-            transform: scale(1.2);
+            transform: scale(1.1); /* Slightly smaller scale */
         }
 
         .button-group {
@@ -178,54 +180,56 @@
 
         /* Footer Styles */
         .footer {
-            margin-top: 50px; /* More space above footer */
+            margin-top: 50px; 
             padding-top: 25px;
             border-top: 1px solid var(--input-border-color);
             text-align: center;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap; /* Allow wrapping on smaller screens */
-            gap: 15px; /* Space between icons */
+            flex-wrap: wrap; 
+            gap: 15px; 
         }
 
         .footer a {
-            display: inline-flex; /* Use flex for alignment */
+            display: inline-flex; 
             align-items: center;
             color: var(--label-color);
             text-decoration: none;
             font-size: 0.9em;
             transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             padding: 8px 15px;
-            background-color: #333; /* Slightly different background */
-            border-radius: 25px; /* More rounded */
+            background-color: #333; 
+            border-radius: 25px; 
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .footer a:hover {
             color: var(--text-color);
-            background-color: #4f4f4f; /* Lighter on hover */
-            transform: translateY(-3px); /* Slightly lift effect */
+            background-color: #4f4f4f; 
+            transform: translateY(-3px); 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .footer img {
-            width: 18px; /* Control icon size */
+            width: 18px; 
             height: 18px;
-            margin-left: 10px; /* Space between icon and text */
-            vertical-align: middle; /* Align icon nicely */
-            border-radius: 4px; /* Slightly round icon corners */
+            margin-left: 10px; 
+            vertical-align: middle; 
+            border-radius: 4px; 
         }
 
         .footer span {
             font-weight: 400;
         }
         
-        /* Responsive Footer */
          @media (max-width: 600px) {
+            .checkbox-group {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
             .footer {
-                flex-direction: row; /* Keep as row but wrap */
-                justify-content: center; /* Center items */
+                flex-direction: row; 
+                justify-content: center; 
                 gap: 10px;
             }
              .footer a {
@@ -235,18 +239,6 @@
              .footer img {
                 width: 16px;
                 height: 16px;
-             }
-         }
-         @media (max-width: 400px) {
-            .footer a span {
-                 /* Optionally hide text on very small screens */
-                 /* display: none; */
-            }
-            .footer a {
-                 padding: 8px 10px;
-            }
-             .footer img {
-                margin-left: 0;
              }
          }
 
@@ -305,7 +297,13 @@
                 <label> گسترش قوانین<input type="checkbox" id="expand"></label>
                 <label> پرش از بررسی گواهی<input type="checkbox" id="scv"></label>
                 <label> فیلتر دامنه‌های نامناسب<input type="checkbox" id="fdn" checked></label>
-                 <label> نام‌گذاری جدید Clash<input type="checkbox" id="new_name" checked></label>
+                <label> نام‌گذاری جدید Clash<input type="checkbox" id="new_name" checked></label>
+                <label> افزودن نودهای پیش‌فرض<input type="checkbox" id="insert"></label>
+                <label> فعال‌سازی XUDP<input type="checkbox" id="xudp"></label>
+                <label> فعال‌سازی TLS 1.3<input type="checkbox" id="tls13"></label>
+                <label> مرتب‌سازی نودها<input type="checkbox" id="sort"></label>
+                <label> افزودن نوع نود<input type="checkbox" id="append_type"></label>
+                <label> فیلتر نودهای ناسازگار<input type="checkbox" id="f_un"></label>
             </div>
         </div>
 
@@ -332,8 +330,7 @@
             </a>
             <a href="https://www.tvtime.com/en/user/43351079/profile" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.google.com/s2/favicons?sz=32&domain=tvtime.com" alt="TV Time">
-                <span>TV Time</span>
-            </a>
+                <span>تی‌وی تایم</span> </a>
             <a href="https://linktr.ee/coldwater_10" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.google.com/s2/favicons?sz=32&domain=linktr.ee" alt="Linktree">
                 <span>لینک‌تری</span>
@@ -366,6 +363,7 @@
                 params.append('config', configInput);
             }
 
+            // Existing checkboxes
             params.append('emoji', document.getElementById('emoji').checked);
             params.append('udp', document.getElementById('udp').checked);
             params.append('tfo', document.getElementById('tfo').checked);
@@ -374,9 +372,16 @@
             params.append('fdn', document.getElementById('fdn').checked);
             params.append('new_name', document.getElementById('new_name').checked);
 
-            params.append('insert', 'false');
-            params.append('list', 'false');
-            params.append('xudp', 'false');
+            // New checkboxes
+            params.append('insert', document.getElementById('insert').checked);
+            params.append('xudp', document.getElementById('xudp').checked);
+            params.append('tls13', document.getElementById('tls13').checked);
+            params.append('sort', document.getElementById('sort').checked);
+            params.append('append_type', document.getElementById('append_type').checked);
+            params.append('f_un', document.getElementById('f_un').checked);
+
+
+            params.append('list', 'false'); // Kept this as false, add a checkbox if needed
 
             const finalUrl = baseUrl + params.toString();
             document.getElementById('output-url').value = finalUrl;
