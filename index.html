@@ -30,7 +30,7 @@
             padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align to top */
+            align-items: flex-start;
             min-height: 100vh;
             font-size: 16px;
             line-height: 1.6;
@@ -78,22 +78,36 @@
             font-family: 'Vazirmatn', sans-serif;
             box-sizing: border-box;
             font-size: 0.95em;
+            direction: ltr; /* Inputs generally LTR, except textarea maybe */
+            text-align: left;
         }
-         .form-group textarea {
+        
+        .form-group textarea {
+            direction: rtl; /* For Persian input */
+            text-align: right;
             min-height: 80px;
             resize: vertical;
-         }
+        }
 
         .form-group input::placeholder,
         .form-group textarea::placeholder {
              color: #888;
+             text-align: right; /* Placeholder text RTL */
         }
+        
+        .form-group input[type="text"],
+        .form-group select {
+            direction: ltr; /* URLs and selects often better LTR */
+            text-align: left;
+        }
+
 
         .checkbox-group {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
             margin-top: 10px;
+            text-align: right; /* Align checkboxes right */
         }
 
         .checkbox-group label {
@@ -104,13 +118,15 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.2s;
+            justify-content: flex-end; /* Align content to the right */
         }
          .checkbox-group label:hover {
             background-color: #4a4a4a;
          }
 
         .checkbox-group input[type="checkbox"] {
-            margin-left: 10px; /* For RTL, margin goes left */
+            margin-left: 10px; /* Space between checkbox and text */
+            margin-right: 0; /* No margin on the right */
             transform: scale(1.2);
         }
 
@@ -174,24 +190,30 @@
                 <option value="trojan">Trojan</option>
                 <option value="shadowsocks">Shadowsocks (SIP002)</option>
                 <option value="mixed">Mixed</option>
-                </select>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="api-url">آدرس سرویس مبدل (API):</label>
+            <input type="text" id="api-url" value="https://url.v1.mk/sub" placeholder="آدرس API مبدل را وارد کنید">
         </div>
 
         <div class="form-group">
             <label for="config">پیکربندی ریموت:</label>
-            <input type="text" id="config" placeholder="آدرس فایل پیکربندی (مانند ini یا rule-set)، یا خالی بگذارید">
+            <input type="text" id="config" value="https://raw.githubusercontent.com/10ium/sub-converter_farsi/refs/heads/main/vpnclashfa.ini" placeholder="آدرس فایل پیکربندی (مانند ini یا rule-set)، یا خالی بگذارید">
         </div>
+
 
         <div class="form-group">
             <label>گزینه‌ها:</label>
             <div class="checkbox-group">
-                <label><input type="checkbox" id="emoji" checked> نمایش اموجی پرچم</label>
-                <label><input type="checkbox" id="udp"> فعال‌سازی UDP</label>
-                <label><input type="checkbox" id="tfo"> فعال‌سازی TFO</label>
-                <label><input type="checkbox" id="expand" checked> گسترش قوانین</label>
-                <label><input type="checkbox" id="scv"> پرش از بررسی گواهی</label>
-                <label><input type="checkbox" id="fdn"> فیلتر دامنه‌های نامناسب</label>
-                 <label><input type="checkbox" id="new_name" checked> نام‌گذاری جدید Clash</label>
+                <label> نمایش اموجی پرچم<input type="checkbox" id="emoji" checked></label>
+                <label> فعال‌سازی UDP<input type="checkbox" id="udp"></label>
+                <label> فعال‌سازی TFO<input type="checkbox" id="tfo"></label>
+                <label> گسترش قوانین<input type="checkbox" id="expand" checked></label>
+                <label> پرش از بررسی گواهی<input type="checkbox" id="scv"></label>
+                <label> فیلتر دامنه‌های نامناسب<input type="checkbox" id="fdn"></label>
+                 <label> نام‌گذاری جدید Clash<input type="checkbox" id="new_name" checked></label>
             </div>
         </div>
 
@@ -210,10 +232,17 @@
 
     <script>
         document.getElementById('generate-btn').addEventListener('click', function() {
-            const baseUrl = 'https://url.v1.mk/sub?';
+            // خواندن آدرس API از فیلد ورودی جدید
+            const apiUrl = document.getElementById('api-url').value.trim();
+            if (!apiUrl) {
+                alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.');
+                return;
+            }
+
+            const baseUrl = apiUrl.endsWith('?') ? apiUrl : apiUrl + '?'; // اطمینان از وجود ?
             const params = new URLSearchParams();
 
-            const subUrlInput = document.getElementById('sub-url').value;
+            const subUrlInput = document.getElementById('sub-url').value.trim();
             if (!subUrlInput) {
                 alert('لطفاً حداقل یک لینک اشتراک وارد کنید.');
                 return;
@@ -222,7 +251,7 @@
 
             params.append('target', document.getElementById('target').value);
 
-            const configInput = document.getElementById('config').value;
+            const configInput = document.getElementById('config').value.trim();
             if (configInput) {
                 params.append('config', configInput);
             }
@@ -235,10 +264,9 @@
             params.append('fdn', document.getElementById('fdn').checked);
             params.append('new_name', document.getElementById('new_name').checked);
 
-            // Add other static params if needed based on your example
-            params.append('insert', 'false'); // Example from your link
-            params.append('list', 'false');  // Example from your link
-            params.append('xudp', 'false');  // Example from your link
+            params.append('insert', 'false');
+            params.append('list', 'false');
+            params.append('xudp', 'false');
 
             const finalUrl = baseUrl + params.toString();
             document.getElementById('output-url').value = finalUrl;
@@ -248,7 +276,7 @@
             const outputUrlInput = document.getElementById('output-url');
             if (outputUrlInput.value) {
                 outputUrlInput.select();
-                outputUrlInput.setSelectionRange(0, 99999); // For mobile devices
+                outputUrlInput.setSelectionRange(0, 99999);
                 try {
                      navigator.clipboard.writeText(outputUrlInput.value).then(function() {
                         alert('لینک با موفقیت کپی شد!');
@@ -256,7 +284,6 @@
                         alert('خطا در کپی کردن لینک: ' + err);
                     });
                 } catch (err) {
-                    // Fallback for older browsers
                     try {
                         document.execCommand('copy');
                         alert('لینک با موفقیت کپی شد! (Fallback)');
