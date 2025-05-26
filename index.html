@@ -78,12 +78,12 @@
             font-family: 'Vazirmatn', sans-serif;
             box-sizing: border-box;
             font-size: 0.95em;
-            direction: ltr; /* Inputs generally LTR, except textarea maybe */
+            direction: ltr;
             text-align: left;
         }
         
         .form-group textarea {
-            direction: rtl; /* For Persian input */
+            direction: rtl;
             text-align: right;
             min-height: 80px;
             resize: vertical;
@@ -92,13 +92,20 @@
         .form-group input::placeholder,
         .form-group textarea::placeholder {
              color: #888;
-             text-align: right; /* Placeholder text RTL */
+             text-align: right;
         }
         
         .form-group input[type="text"],
         .form-group select {
-            direction: ltr; /* URLs and selects often better LTR */
+            direction: ltr;
             text-align: left;
+        }
+        
+        /* Apply Vazir font to options within select */
+        .form-group select option {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--input-bg-color);
+            color: var(--text-color);
         }
 
 
@@ -107,7 +114,7 @@
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
             margin-top: 10px;
-            text-align: right; /* Align checkboxes right */
+            text-align: right;
         }
 
         .checkbox-group label {
@@ -118,15 +125,15 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.2s;
-            justify-content: flex-end; /* Align content to the right */
+            justify-content: flex-end;
         }
          .checkbox-group label:hover {
             background-color: #4a4a4a;
          }
 
         .checkbox-group input[type="checkbox"] {
-            margin-left: 10px; /* Space between checkbox and text */
-            margin-right: 0; /* No margin on the right */
+            margin-left: 10px;
+            margin-right: 0;
             transform: scale(1.2);
         }
 
@@ -158,12 +165,11 @@
             background-color: #218838;
          }
 
-
         .output-group {
             margin-top: 30px;
         }
         .output-group input {
-            direction: ltr; /* URLs should be LTR */
+            direction: ltr;
             text-align: left;
             background-color: #111;
             border-color: var(--primary-color);
@@ -183,13 +189,24 @@
         <div class="form-group">
             <label for="target">نوع خروجی:</label>
             <select id="target">
-                <option value="clash" selected>Clash</option>
-                <option value="singbox">Sing-Box</option>
-                <option value="surge&ver=4">Surge 4/5</option>
-                <option value="v2ray">V2Ray</option>
-                <option value="trojan">Trojan</option>
-                <option value="shadowsocks">Shadowsocks (SIP002)</option>
-                <option value="mixed">Mixed</option>
+                <option value="clash" selected>کلش (Clash)</option>
+                <option value="surge&ver=4">سورج ۴/۵ (Surge 4/5)</option>
+                <option value="singbox">سینگ‌باکس (Sing-Box)</option>
+                <option value="v2ray">وی‌تو‌ری (V2Ray)</option>
+                <option value="trojan">تروجان (Trojan)</option>
+                <option value="ssr">شدوساکس آر (SSR)</option>
+                <option value="mixed">ترکیبی (Mixed)</option>
+                <option value="surfboard">سرف‌بورد (Surfboard)</option>
+                <option value="quan">کوانتومولت (Quantumult)</option>
+                <option value="quanx">کوانتومولت ایکس (Quantumult X)</option>
+                <option value="loon">لون (Loon)</option>
+                <option value="mellow">ملو (Mellow)</option>
+                <option value="surge&ver=3">سورج ۳ (Surge 3)</option>
+                <option value="surge&ver=2">سورج ۲ (Surge 2)</option>
+                <option value="clashr">کلش آر (ClashR)</option>
+                <option value="ss">شدوساکس (SIP002)</option>
+                <option value="ssand">شدوساکس اندروید (SIP008)</option>
+                <option value="ssd">شدوساکس دی (SSD)</option>
             </select>
         </div>
 
@@ -203,16 +220,15 @@
             <input type="text" id="config" value="https://raw.githubusercontent.com/10ium/sub-converter_farsi/refs/heads/main/vpnclashfa.ini" placeholder="آدرس فایل پیکربندی (مانند ini یا rule-set)، یا خالی بگذارید">
         </div>
 
-
         <div class="form-group">
             <label>گزینه‌ها:</label>
             <div class="checkbox-group">
                 <label> نمایش اموجی پرچم<input type="checkbox" id="emoji" checked></label>
-                <label> فعال‌سازی UDP<input type="checkbox" id="udp"></label>
+                <label> فعال‌سازی UDP<input type="checkbox" id="udp" checked></label>
                 <label> فعال‌سازی TFO<input type="checkbox" id="tfo"></label>
-                <label> گسترش قوانین<input type="checkbox" id="expand" checked></label>
+                <label> گسترش قوانین<input type="checkbox" id="expand"></label>
                 <label> پرش از بررسی گواهی<input type="checkbox" id="scv"></label>
-                <label> فیلتر دامنه‌های نامناسب<input type="checkbox" id="fdn"></label>
+                <label> فیلتر دامنه‌های نامناسب<input type="checkbox" id="fdn" checked></label>
                  <label> نام‌گذاری جدید Clash<input type="checkbox" id="new_name" checked></label>
             </div>
         </div>
@@ -232,14 +248,13 @@
 
     <script>
         document.getElementById('generate-btn').addEventListener('click', function() {
-            // خواندن آدرس API از فیلد ورودی جدید
             const apiUrl = document.getElementById('api-url').value.trim();
             if (!apiUrl) {
                 alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.');
                 return;
             }
 
-            const baseUrl = apiUrl.endsWith('?') ? apiUrl : apiUrl + '?'; // اطمینان از وجود ?
+            const baseUrl = apiUrl.endsWith('?') ? apiUrl : apiUrl + '?';
             const params = new URLSearchParams();
 
             const subUrlInput = document.getElementById('sub-url').value.trim();
