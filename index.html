@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a0a0ff' width='32px' height='32px'%3E%3Cpath d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z'/%3E%3C/svg%3E" type="image/svg+xml">
 
     <style>
         :root {
@@ -29,9 +30,8 @@
             margin: 0;
             padding: 20px;
             display: flex;
-            flex-direction: column; /* Changed to column to stack main content and footer */
-            justify-content: flex-start;
-            align-items: center; /* Center horizontally */
+            justify-content: center;
+            align-items: flex-start;
             min-height: 100vh;
             font-size: 16px;
             line-height: 1.6;
@@ -45,7 +45,7 @@
             width: 100%;
             max-width: 700px;
             box-sizing: border-box;
-            margin-bottom: 40px; /* Add some space before the footer */
+            padding-bottom: 30px; /* Add some padding for the footer */
         }
 
         h1 {
@@ -109,7 +109,6 @@
             background-color: var(--input-bg-color);
             color: var(--text-color);
         }
-
 
         .checkbox-group {
             display: grid;
@@ -177,35 +176,80 @@
             border-color: var(--primary-color);
         }
 
-        /* Footer styles */
-        .footer-social-links {
+        /* Footer Styles */
+        .footer {
+            margin-top: 50px; /* More space above footer */
+            padding-top: 25px;
+            border-top: 1px solid var(--input-border-color);
+            text-align: center;
             display: flex;
-            justify-content: center; /* Center the icons */
+            justify-content: center;
             align-items: center;
-            width: 100%; /* Ensure it spans the full width */
-            max-width: 700px; /* Match the container's max-width for alignment */
-            padding: 20px 0;
-            margin-top: auto; /* Push the footer to the bottom */
-            background-color: var(--card-bg-color); /* Match card background */
-            border-radius: 8px; /* Match card border-radius */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Match card shadow */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 15px; /* Space between icons */
         }
 
-        .footer-social-links a {
-            margin: 0 15px; /* Adjust spacing between icons */
-            display: inline-block; /* Ensure proper spacing and sizing */
+        .footer a {
+            display: inline-flex; /* Use flex for alignment */
+            align-items: center;
+            color: var(--label-color);
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 8px 15px;
+            background-color: #333; /* Slightly different background */
+            border-radius: 25px; /* More rounded */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .footer-social-links img {
-            width: 50px; /* Reduced size for footer icons */
-            height: 50px; /* Reduced size for footer icons */
-            border-radius: 50%; /* Make icons round */
-            transition: transform 0.3s ease-in-out;
+        .footer a:hover {
+            color: var(--text-color);
+            background-color: #4f4f4f; /* Lighter on hover */
+            transform: translateY(-3px); /* Slightly lift effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .footer-social-links img:hover {
-            transform: scale(1.1); /* Slightly enlarge on hover */
+        .footer img {
+            width: 18px; /* Control icon size */
+            height: 18px;
+            margin-left: 10px; /* Space between icon and text */
+            vertical-align: middle; /* Align icon nicely */
+            border-radius: 4px; /* Slightly round icon corners */
         }
+
+        .footer span {
+            font-weight: 400;
+        }
+        
+        /* Responsive Footer */
+         @media (max-width: 600px) {
+            .footer {
+                flex-direction: row; /* Keep as row but wrap */
+                justify-content: center; /* Center items */
+                gap: 10px;
+            }
+             .footer a {
+                 padding: 6px 12px;
+                 font-size: 0.85em;
+             }
+             .footer img {
+                width: 16px;
+                height: 16px;
+             }
+         }
+         @media (max-width: 400px) {
+            .footer a span {
+                 /* Optionally hide text on very small screens */
+                 /* display: none; */
+            }
+            .footer a {
+                 padding: 8px 10px;
+            }
+             .footer img {
+                margin-left: 0;
+             }
+         }
+
     </style>
 </head>
 <body>
@@ -261,7 +305,7 @@
                 <label> گسترش قوانین<input type="checkbox" id="expand"></label>
                 <label> پرش از بررسی گواهی<input type="checkbox" id="scv"></label>
                 <label> فیلتر دامنه‌های نامناسب<input type="checkbox" id="fdn" checked></label>
-                <label> نام‌گذاری جدید Clash<input type="checkbox" id="new_name" checked></label>
+                 <label> نام‌گذاری جدید Clash<input type="checkbox" id="new_name" checked></label>
             </div>
         </div>
 
@@ -272,18 +316,30 @@
         <div class="output-group form-group">
             <label for="output-url">لینک تولید شده:</label>
             <div style="display: flex;">
-                <input type="text" id="output-url" readonly placeholder="لینک نهایی در اینجا نمایش داده می‌شود...">
-                <button id="copy-btn" class="copy-btn" style="width: 100px; margin-right: 10px;">کپی</button>
+                 <input type="text" id="output-url" readonly placeholder="لینک نهایی در اینجا نمایش داده می‌شود...">
+                 <button id="copy-btn" class="copy-btn" style="width: 100px; margin-right: 10px;">کپی</button>
             </div>
         </div>
-    </div>
 
-    <footer class="footer-social-links">
-        <a href="https://t.me/vpnclashfa"><img src="https://cdn.dribbble.com/users/4507400/screenshots/15420681/media/c00f77bc443cbc4ac96d138f9ac854c5.gif" alt="Telegram"></a>
-        <a href="https://twitter.com/coldwater_10"><img src="https://cdn.dribbble.com/users/2652449/screenshots/14764078/media/2b620382444946ce84aac0a132c40063.gif" alt="Twitter"></a>
-        <a href="https://www.tvtime.com/en/user/43351079/profile"><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTFhMDk5NzJlYzdmZTJjMDM2Y2MzMjBkOTVkODAxM2FjMTdjZGMwNSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/lj1ghwUoflkw2F3o0T/giphy.gif" alt="TvTime"></a>
-        <a href="https://linktr.ee/coldwater_10"><img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGZrdHVxaGkycXV5M2g2emdvdHkwOWVvOHI5YWR3cTVtODJtbGQwcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/U3ig2IVcuNn6VgU3oO/giphy.gif" alt="linktr"></a>
-    </footer>
+        <div class="footer">
+            <a href="https://t.me/vpnclashfa" target="_blank" rel="noopener noreferrer">
+                <img src="https://www.google.com/s2/favicons?sz=32&domain=t.me" alt="Telegram">
+                <span>تلگرام</span>
+            </a>
+            <a href="https://twitter.com/coldwater_10" target="_blank" rel="noopener noreferrer">
+                <img src="https://www.google.com/s2/favicons?sz=32&domain=twitter.com" alt="Twitter">
+                <span>توییتر</span>
+            </a>
+            <a href="https://www.tvtime.com/en/user/43351079/profile" target="_blank" rel="noopener noreferrer">
+                <img src="https://www.google.com/s2/favicons?sz=32&domain=tvtime.com" alt="TV Time">
+                <span>TV Time</span>
+            </a>
+            <a href="https://linktr.ee/coldwater_10" target="_blank" rel="noopener noreferrer">
+                <img src="https://www.google.com/s2/favicons?sz=32&domain=linktr.ee" alt="Linktree">
+                <span>لینک‌تری</span>
+            </a>
+        </div>
+        </div>
 
     <script>
         document.getElementById('generate-btn').addEventListener('click', function() {
@@ -332,17 +388,17 @@
                 outputUrlInput.select();
                 outputUrlInput.setSelectionRange(0, 99999);
                 try {
-                    navigator.clipboard.writeText(outputUrlInput.value).then(function() {
-                        alert('لینک با موفقیت کپی شد!');
-                    }, function(err) {
-                        alert('خطا در کپی کردن لینک: ' + err);
-                    });
+                     navigator.clipboard.writeText(outputUrlInput.value).then(function() {
+                         alert('لینک با موفقیت کپی شد!');
+                     }, function(err) {
+                         alert('خطا در کپی کردن لینک: ' + err);
+                     });
                 } catch (err) {
                     try {
                         document.execCommand('copy');
                         alert('لینک با موفقیت کپی شد! (Fallback)');
                     } catch (e) {
-                        alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
+                         alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
                     }
                 }
             } else {
