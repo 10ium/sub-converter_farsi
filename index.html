@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ابزار تبدیل اشتراک</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-bg-color: #2c2c2c;
+            --text-color: #e0e0e0;
+            --label-color: #b3b3b3;
+            --input-bg-color: #3a3a3a;
+            --input-border-color: #555;
+            --button-bg-color: #007bff;
+            --button-text-color: #ffffff;
+            --button-hover-bg: #0056b3;
+            --primary-color: #a0a0ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .container {
+            background-color: var(--card-bg-color);
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 700px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--label-color);
+            font-weight: 700;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--input-border-color);
+            background-color: var(--input-bg-color);
+            color: var(--text-color);
+            border-radius: 5px;
+            font-family: 'Vazirmatn', sans-serif;
+            box-sizing: border-box;
+            font-size: 0.95em;
+        }
+         .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+         }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+             color: #888;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            background-color: var(--input-bg-color);
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+         .checkbox-group label:hover {
+            background-color: #4a4a4a;
+         }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-left: 10px; /* For RTL, margin goes left */
+            transform: scale(1.2);
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: var(--button-hover-bg);
+        }
+         button.copy-btn {
+            background-color: #28a745;
+         }
+         button.copy-btn:hover {
+            background-color: #218838;
+         }
+
+
+        .output-group {
+            margin-top: 30px;
+        }
+        .output-group input {
+            direction: ltr; /* URLs should be LTR */
+            text-align: left;
+            background-color: #111;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ابزار تبدیل اشتراک</h1>
+
+        <div class="form-group">
+            <label for="sub-url">لینک(های) اشتراک:</label>
+            <textarea id="sub-url" rows="4" placeholder="لینک اشتراک خود را وارد کنید. برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="target">نوع خروجی:</label>
+            <select id="target">
+                <option value="clash" selected>Clash</option>
+                <option value="singbox">Sing-Box</option>
+                <option value="surge&ver=4">Surge 4/5</option>
+                <option value="v2ray">V2Ray</option>
+                <option value="trojan">Trojan</option>
+                <option value="shadowsocks">Shadowsocks (SIP002)</option>
+                <option value="mixed">Mixed</option>
+                </select>
+        </div>
+
+        <div class="form-group">
+            <label for="config">پیکربندی ریموت:</label>
+            <input type="text" id="config" placeholder="آدرس فایل پیکربندی (مانند ini یا rule-set)، یا خالی بگذارید">
+        </div>
+
+        <div class="form-group">
+            <label>گزینه‌ها:</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="emoji" checked> نمایش اموجی پرچم</label>
+                <label><input type="checkbox" id="udp"> فعال‌سازی UDP</label>
+                <label><input type="checkbox" id="tfo"> فعال‌سازی TFO</label>
+                <label><input type="checkbox" id="expand" checked> گسترش قوانین</label>
+                <label><input type="checkbox" id="scv"> پرش از بررسی گواهی</label>
+                <label><input type="checkbox" id="fdn"> فیلتر دامنه‌های نامناسب</label>
+                 <label><input type="checkbox" id="new_name" checked> نام‌گذاری جدید Clash</label>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button id="generate-btn">تولید لینک اشتراک</button>
+        </div>
+
+        <div class="output-group form-group">
+            <label for="output-url">لینک تولید شده:</label>
+            <div style="display: flex;">
+                 <input type="text" id="output-url" readonly placeholder="لینک نهایی در اینجا نمایش داده می‌شود...">
+                 <button id="copy-btn" class="copy-btn" style="width: 100px; margin-right: 10px;">کپی</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            const baseUrl = 'https://url.v1.mk/sub?';
+            const params = new URLSearchParams();
+
+            const subUrlInput = document.getElementById('sub-url').value;
+            if (!subUrlInput) {
+                alert('لطفاً حداقل یک لینک اشتراک وارد کنید.');
+                return;
+            }
+            params.append('url', subUrlInput);
+
+            params.append('target', document.getElementById('target').value);
+
+            const configInput = document.getElementById('config').value;
+            if (configInput) {
+                params.append('config', configInput);
+            }
+
+            params.append('emoji', document.getElementById('emoji').checked);
+            params.append('udp', document.getElementById('udp').checked);
+            params.append('tfo', document.getElementById('tfo').checked);
+            params.append('expand', document.getElementById('expand').checked);
+            params.append('scv', document.getElementById('scv').checked);
+            params.append('fdn', document.getElementById('fdn').checked);
+            params.append('new_name', document.getElementById('new_name').checked);
+
+            // Add other static params if needed based on your example
+            params.append('insert', 'false'); // Example from your link
+            params.append('list', 'false');  // Example from your link
+            params.append('xudp', 'false');  // Example from your link
+
+            const finalUrl = baseUrl + params.toString();
+            document.getElementById('output-url').value = finalUrl;
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const outputUrlInput = document.getElementById('output-url');
+            if (outputUrlInput.value) {
+                outputUrlInput.select();
+                outputUrlInput.setSelectionRange(0, 99999); // For mobile devices
+                try {
+                     navigator.clipboard.writeText(outputUrlInput.value).then(function() {
+                        alert('لینک با موفقیت کپی شد!');
+                    }, function(err) {
+                        alert('خطا در کپی کردن لینک: ' + err);
+                    });
+                } catch (err) {
+                    // Fallback for older browsers
+                    try {
+                        document.execCommand('copy');
+                        alert('لینک با موفقیت کپی شد! (Fallback)');
+                    } catch (e) {
+                         alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
+                    }
+                }
+            } else {
+                alert('هنوز لینکی تولید نشده است.');
+            }
+        });
+    </script>
+
+</body>
+</html>
