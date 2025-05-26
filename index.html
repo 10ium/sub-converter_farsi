@@ -1,365 +1,355 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ابزار تبدیل اشتراک</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ابزار تبدیل اشتراک</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --bg-color: #1a1a1a;
-            --card-bg-color: #2c2c2c;
-            --text-color: #e0e0e0;
-            --label-color: #b3b3b3;
-            --input-bg-color: #3a3a3a;
-            --input-border-color: #555;
-            --button-bg-color: #007bff;
-            --button-text-color: #ffffff;
-            --button-hover-bg: #0056b3;
-            --primary-color: #a0a0ff;
-        }
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-bg-color: #2c2c2c;
+            --text-color: #e0e0e0;
+            --label-color: #b3b3b3;
+            --input-bg-color: #3a3a3a;
+            --input-border-color: #555;
+            --button-bg-color: #007bff;
+            --button-text-color: #ffffff;
+            --button-hover-bg: #0056b3;
+            --primary-color: #a0a0ff;
+        }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Vazirmatn', sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .container {
-            background-color: var(--card-bg-color);
-            padding: 25px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 700px;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            color: var(--text-color);
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: 700;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--label-color);
-            font-weight: 700;
-        }
-
-        .form-group input[type="text"],
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--input-border-color);
-            background-color: var(--input-bg-color);
-            color: var(--text-color);
-            border-radius: 5px;
-            font-family: 'Vazirmatn', sans-serif;
-            box-sizing: border-box;
-            font-size: 0.95em;
-            direction: ltr;
-            text-align: left;
-        }
-        
-        .form-group textarea {
-            direction: rtl;
-            text-align: right;
-            min-height: 80px;
-            resize: vertical;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-             color: #888;
-             text-align: right;
-        }
-        
-        .form-group input[type="text"],
-        .form-group select {
-            direction: ltr;
-            text-align: left;
-        }
-        
-        /* Apply Vazir font to options within select */
-        .form-group select option {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: var(--input-bg-color);
-            color: var(--text-color);
-        }
-
-
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-top: 10px;
-            text-align: right;
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            background-color: var(--input-bg-color);
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            justify-content: flex-end;
-        }
-         .checkbox-group label:hover {
-            background-color: #4a4a4a;
-         }
-
-        .checkbox-group input[type="checkbox"] {
-            margin-left: 10px;
-            margin-right: 0;
-            transform: scale(1.2);
-        }
-
-        .button-group {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        button {
-            background-color: var(--button-bg-color);
-            color: var(--button-text-color);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin: 5px;
-        }
-
-        button:hover {
-            background-color: var(--button-hover-bg);
-        }
-         button.copy-btn {
-            background-color: #28a745;
-         }
-         button.copy-btn:hover {
-            background-color: #218838;
-         }
-
-        .output-group {
-            margin-top: 30px;
-        }
-        .output-group input {
-            direction: ltr;
-            text-align: left;
-            background-color: #111;
-            border-color: var(--primary-color);
-        }
-
-        .social-links {
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            padding: 20px;
             display: flex;
-            justify-content: center; /* Center the links */
+            flex-direction: column; /* Changed to column to stack main content and footer */
+            justify-content: flex-start;
+            align-items: center; /* Center horizontally */
+            min-height: 100vh;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .container {
+            background-color: var(--card-bg-color);
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 700px;
+            box-sizing: border-box;
+            margin-bottom: 40px; /* Add some space before the footer */
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--label-color);
+            font-weight: 700;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--input-border-color);
+            background-color: var(--input-bg-color);
+            color: var(--text-color);
+            border-radius: 5px;
+            font-family: 'Vazirmatn', sans-serif;
+            box-sizing: border-box;
+            font-size: 0.95em;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .form-group textarea {
+            direction: rtl;
+            text-align: right;
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+             color: #888;
+             text-align: right;
+        }
+        
+        .form-group input[type="text"],
+        .form-group select {
+            direction: ltr;
+            text-align: left;
+        }
+        
+        /* Apply Vazir font to options within select */
+        .form-group select option {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--input-bg-color);
+            color: var(--text-color);
+        }
+
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .checkbox-group label {
+            display: flex;
             align-items: center;
-            width: 100%; /* Take full width of the container */
-            margin-top: 40px; /* Add some space above the links */
-            padding-top: 20px; /* Add padding to separate from content */
-            border-top: 1px solid var(--input-border-color); /* Subtle separator line */
+            background-color: var(--input-bg-color);
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            justify-content: flex-end;
+        }
+         .checkbox-group label:hover {
+            background-color: #4a4a4a;
+         }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-left: 10px;
+            margin-right: 0;
+            transform: scale(1.2);
         }
 
-        .social-links a {
+        .button-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: var(--button-hover-bg);
+        }
+         button.copy-btn {
+            background-color: #28a745;
+         }
+         button.copy-btn:hover {
+            background-color: #218838;
+         }
+
+        .output-group {
+            margin-top: 30px;
+        }
+        .output-group input {
+            direction: ltr;
+            text-align: left;
+            background-color: #111;
+            border-color: var(--primary-color);
+        }
+
+        /* Footer styles */
+        .footer-social-links {
+            display: flex;
+            justify-content: center; /* Center the icons */
+            align-items: center;
+            width: 100%; /* Ensure it spans the full width */
+            max-width: 700px; /* Match the container's max-width for alignment */
+            padding: 20px 0;
+            margin-top: auto; /* Push the footer to the bottom */
+            background-color: var(--card-bg-color); /* Match card background */
+            border-radius: 8px; /* Match card border-radius */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Match card shadow */
+        }
+
+        .footer-social-links a {
             margin: 0 15px; /* Adjust spacing between icons */
-            display: block; /* Ensures proper sizing for image */
-            transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+            display: inline-block; /* Ensure proper spacing and sizing */
         }
 
-        .social-links a:hover {
-            transform: scale(1.1); /* Slightly enlarge icons on hover */
+        .footer-social-links img {
+            width: 50px; /* Reduced size for footer icons */
+            height: 50px; /* Reduced size for footer icons */
+            border-radius: 50%; /* Make icons round */
+            transition: transform 0.3s ease-in-out;
         }
 
-        .social-links img {
-            width: 60px; /* Adjust icon size to fit better */
-            height: 60px; /* Adjust icon size to fit better */
-            border-radius: 50%; /* Make icons circular if they are square */
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Add a subtle shadow */
+        .footer-social-links img:hover {
+            transform: scale(1.1); /* Slightly enlarge on hover */
         }
-
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 600px) {
-            .social-links {
-                flex-wrap: wrap; /* Allow links to wrap on smaller screens */
-                justify-content: space-around; /* Distribute space more evenly */
-            }
-            .social-links a {
-                margin: 10px; /* Adjust margin for wrapped items */
-            }
-            .social-links img {
-                width: 50px; /* Slightly smaller icons on small screens */
-                height: 50px;
-            }
-        }
-    </style>
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>ابزار تبدیل اشتراک</h1>
+    <div class="container">
+        <h1>ابزار تبدیل اشتراک</h1>
 
-        <div class="form-group">
-            <label for="sub-url">لینک(های) اشتراک:</label>
-            <textarea id="sub-url" rows="4" placeholder="لینک اشتراک خود را وارد کنید. برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید."></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="target">نوع خروجی:</label>
-            <select id="target">
-                <option value="clash" selected>کلش (Clash)</option>
-                <option value="surge&ver=4">سورج ۴/۵ (Surge 4/5)</option>
-                <option value="singbox">سینگ‌باکس (Sing-Box)</option>
-                <option value="v2ray">وی‌تو‌ری (V2Ray)</option>
-                <option value="trojan">تروجان (Trojan)</option>
-                <option value="ssr">شدوساکس آر (SSR)</option>
-                <option value="mixed">ترکیبی (Mixed)</option>
-                <option value="surfboard">سرف‌بورد (Surfboard)</option>
-                <option value="quan">کوانتومولت (Quantumult)</option>
-                <option value="quanx">کوانتومولت ایکس (Quantumult X)</option>
-                <option value="loon">لون (Loon)</option>
-                <option value="mellow">ملو (Mellow)</option>
-                <option value="surge&ver=3">سورج ۳ (Surge 3)</option>
-                <option value="surge&ver=2">سورج ۲ (Surge 2)</option>
-                <option value="clashr">کلش آر (ClashR)</option>
-                <option value="ss">شدوساکس (SIP002)</option>
-                <option value="ssand">شدوساکس اندروید (SIP008)</option>
-                <option value="ssd">شدوساکس دی (SSD)</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="api-url">آدرس سرویس مبدل (API):</label>
-            <input type="text" id="api-url" value="https://url.v1.mk/sub" placeholder="آدرس API مبدل را وارد کنید">
-        </div>
-
-        <div class="form-group">
-            <label for="config">پیکربندی ریموت:</label>
-            <input type="text" id="config" value="https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/ACL4SSR/vpnclashfa.ini" placeholder="آدرس فایل پیکربندی (مانند ini یا rule-set)، یا خالی بگذارید">
-        </div>
-
-        <div class="form-group">
-            <label>گزینه‌ها:</label>
-            <div class="checkbox-group">
-                <label> نمایش اموجی پرچم<input type="checkbox" id="emoji" checked></label>
-                <label> فعال‌سازی UDP<input type="checkbox" id="udp" checked></label>
-                <label> فعال‌سازی TFO<input type="checkbox" id="tfo"></label>
-                <label> گسترش قوانین<input type="checkbox" id="expand"></label>
-                <label> پرش از بررسی گواهی<input type="checkbox" id="scv"></label>
-                <label> فیلتر دامنه‌های نامناسب<input type="checkbox" id="fdn" checked></label>
-                 <label> نام‌گذاری جدید Clash<input type="checkbox" id="new_name" checked></label>
-            </div>
-        </div>
-
-        <div class="button-group">
-            <button id="generate-btn">تولید لینک اشتراک</button>
-        </div>
-
-        <div class="output-group form-group">
-            <label for="output-url">لینک تولید شده:</label>
-            <div style="display: flex;">
-                 <input type="text" id="output-url" readonly placeholder="لینک نهایی در اینجا نمایش داده می‌شود...">
-                 <button id="copy-btn" class="copy-btn" style="width: 100px; margin-right: 10px;">کپی</button>
-            </div>
-        </div>
-
-        <div class="social-links">
-            <a href="https://t.me/vpnclashfa"><img src="https://cdn.dribbble.com/users/4507400/screenshots/15420681/media/c00f77bc443cbc4ac96d138f9ac854c5.gif" alt="Telegram"></a>
-            <a href="https://twitter.com/coldwater_10"><img src="https://cdn.dribbble.com/users/2652449/screenshots/14764078/media/2b620382444946ce84aac0a132c40063.gif" alt="Twitter"></a>
-            <a href="https://www.tvtime.com/en/user/43351079/profile"><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTFhMDk5NzJlYzdmZTJjMDM2Y2MzMjBkOTVkODAxM2FjMTdjZGMwNSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/lj1ghwUoflkw2F3o0T/giphy.gif" alt="TvTime"></a>
-            <a href="https://linktr.ee/coldwater_10"><img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGZrdHVxaGkycXV5M2g2emdvdHkwOWVvOHI5YWR3cTVtODJtbGQwcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/U3ig2IVcuNn6VgU3oO/giphy.gif" alt="linktr"></a>
+        <div class="form-group">
+            <label for="sub-url">لینک(های) اشتراک:</label>
+            <textarea id="sub-url" rows="4" placeholder="لینک اشتراک خود را وارد کنید. برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید."></textarea>
         </div>
-    </div>
 
-    <script>
-        document.getElementById('generate-btn').addEventListener('click', function() {
-            const apiUrl = document.getElementById('api-url').value.trim();
-            if (!apiUrl) {
-                alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.');
-                return;
-            }
+        <div class="form-group">
+            <label for="target">نوع خروجی:</label>
+            <select id="target">
+                <option value="clash" selected>کلش (Clash)</option>
+                <option value="surge&ver=4">سورج ۴/۵ (Surge 4/5)</option>
+                <option value="singbox">سینگ‌باکس (Sing-Box)</option>
+                <option value="v2ray">وی‌تو‌ری (V2Ray)</option>
+                <option value="trojan">تروجان (Trojan)</option>
+                <option value="ssr">شدوساکس آر (SSR)</option>
+                <option value="mixed">ترکیبی (Mixed)</option>
+                <option value="surfboard">سرف‌بورد (Surfboard)</option>
+                <option value="quan">کوانتومولت (Quantumult)</option>
+                <option value="quanx">کوانتومولت ایکس (Quantumult X)</option>
+                <option value="loon">لون (Loon)</option>
+                <option value="mellow">ملو (Mellow)</option>
+                <option value="surge&ver=3">سورج ۳ (Surge 3)</option>
+                <option value="surge&ver=2">سورج ۲ (Surge 2)</option>
+                <option value="clashr">کلش آر (ClashR)</option>
+                <option value="ss">شدوساکس (SIP002)</option>
+                <option value="ssand">شدوساکس اندروید (SIP008)</option>
+                <option value="ssd">شدوساکس دی (SSD)</option>
+            </select>
+        </div>
 
-            const baseUrl = apiUrl.endsWith('?') ? apiUrl : apiUrl + '?';
-            const params = new URLSearchParams();
+        <div class="form-group">
+            <label for="api-url">آدرس سرویس مبدل (API):</label>
+            <input type="text" id="api-url" value="https://url.v1.mk/sub" placeholder="آدرس API مبدل را وارد کنید">
+        </div>
 
-            const subUrlInput = document.getElementById('sub-url').value.trim();
-            if (!subUrlInput) {
-                alert('لطفاً حداقل یک لینک اشتراک وارد کنید.');
-                return;
-            }
-            params.append('url', subUrlInput);
+        <div class="form-group">
+            <label for="config">پیکربندی ریموت:</label>
+            <input type="text" id="config" value="https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/ACL4SSR/vpnclashfa.ini" placeholder="آدرس فایل پیکربندی (مانند ini یا rule-set)، یا خالی بگذارید">
+        </div>
 
-            params.append('target', document.getElementById('target').value);
+        <div class="form-group">
+            <label>گزینه‌ها:</label>
+            <div class="checkbox-group">
+                <label> نمایش اموجی پرچم<input type="checkbox" id="emoji" checked></label>
+                <label> فعال‌سازی UDP<input type="checkbox" id="udp" checked></label>
+                <label> فعال‌سازی TFO<input type="checkbox" id="tfo"></label>
+                <label> گسترش قوانین<input type="checkbox" id="expand"></label>
+                <label> پرش از بررسی گواهی<input type="checkbox" id="scv"></label>
+                <label> فیلتر دامنه‌های نامناسب<input type="checkbox" id="fdn" checked></label>
+                <label> نام‌گذاری جدید Clash<input type="checkbox" id="new_name" checked></label>
+            </div>
+        </div>
 
-            const configInput = document.getElementById('config').value.trim();
-            if (configInput) {
-                params.append('config', configInput);
-            }
+        <div class="button-group">
+            <button id="generate-btn">تولید لینک اشتراک</button>
+        </div>
 
-            params.append('emoji', document.getElementById('emoji').checked);
-            params.append('udp', document.getElementById('udp').checked);
-            params.append('tfo', document.getElementById('tfo').checked);
-            params.append('expand', document.getElementById('expand').checked);
-            params.append('scv', document.getElementById('scv').checked);
-            params.append('fdn', document.getElementById('fdn').checked);
-            params.append('new_name', document.getElementById('new_name').checked);
+        <div class="output-group form-group">
+            <label for="output-url">لینک تولید شده:</label>
+            <div style="display: flex;">
+                <input type="text" id="output-url" readonly placeholder="لینک نهایی در اینجا نمایش داده می‌شود...">
+                <button id="copy-btn" class="copy-btn" style="width: 100px; margin-right: 10px;">کپی</button>
+            </div>
+        </div>
+    </div>
 
-            params.append('insert', 'false');
-            params.append('list', 'false');
-            params.append('xudp', 'false');
+    <footer class="footer-social-links">
+        <a href="https://t.me/vpnclashfa"><img src="https://cdn.dribbble.com/users/4507400/screenshots/15420681/media/c00f77bc443cbc4ac96d138f9ac854c5.gif" alt="Telegram"></a>
+        <a href="https://twitter.com/coldwater_10"><img src="https://cdn.dribbble.com/users/2652449/screenshots/14764078/media/2b620382444946ce84aac0a132c40063.gif" alt="Twitter"></a>
+        <a href="https://www.tvtime.com/en/user/43351079/profile"><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTFhMDk5NzJlYzdmZTJjMDM2Y2MzMjBkOTVkODAxM2FjMTdjZGMwNSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/lj1ghwUoflkw2F3o0T/giphy.gif" alt="TvTime"></a>
+        <a href="https://linktr.ee/coldwater_10"><img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGZrdHVxaGkycXV5M2g2emdvdHkwOWVvOHI5YWR3cTVtODJtbGQwcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/U3ig2IVcuNn6VgU3oO/giphy.gif" alt="linktr"></a>
+    </footer>
 
-            const finalUrl = baseUrl + params.toString();
-            document.getElementById('output-url').value = finalUrl;
-        });
+    <script>
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            const apiUrl = document.getElementById('api-url').value.trim();
+            if (!apiUrl) {
+                alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.');
+                return;
+            }
 
-        document.getElementById('copy-btn').addEventListener('click', function() {
-            const outputUrlInput = document.getElementById('output-url');
-            if (outputUrlInput.value) {
-                outputUrlInput.select();
-                outputUrlInput.setSelectionRange(0, 99999);
-                try {
-                     navigator.clipboard.writeText(outputUrlInput.value).then(function() {
-                        alert('لینک با موفقیت کپی شد!');
-                    }, function(err) {
-                        alert('خطا در کپی کردن لینک: ' + err);
-                    });
-                } catch (err) {
-                    try {
-                        document.execCommand('copy');
-                        alert('لینک با موفقیت کپی شد! (Fallback)');
-                    } catch (e) {
-                         alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
-                    }
-                }
-            } else {
-                alert('هنوز لینکی تولید نشده است.');
-            }
-        });
-    </script>
+            const baseUrl = apiUrl.endsWith('?') ? apiUrl : apiUrl + '?';
+            const params = new URLSearchParams();
+
+            const subUrlInput = document.getElementById('sub-url').value.trim();
+            if (!subUrlInput) {
+                alert('لطفاً حداقل یک لینک اشتراک وارد کنید.');
+                return;
+            }
+            params.append('url', subUrlInput);
+
+            params.append('target', document.getElementById('target').value);
+
+            const configInput = document.getElementById('config').value.trim();
+            if (configInput) {
+                params.append('config', configInput);
+            }
+
+            params.append('emoji', document.getElementById('emoji').checked);
+            params.append('udp', document.getElementById('udp').checked);
+            params.append('tfo', document.getElementById('tfo').checked);
+            params.append('expand', document.getElementById('expand').checked);
+            params.append('scv', document.getElementById('scv').checked);
+            params.append('fdn', document.getElementById('fdn').checked);
+            params.append('new_name', document.getElementById('new_name').checked);
+
+            params.append('insert', 'false');
+            params.append('list', 'false');
+            params.append('xudp', 'false');
+
+            const finalUrl = baseUrl + params.toString();
+            document.getElementById('output-url').value = finalUrl;
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const outputUrlInput = document.getElementById('output-url');
+            if (outputUrlInput.value) {
+                outputUrlInput.select();
+                outputUrlInput.setSelectionRange(0, 99999);
+                try {
+                    navigator.clipboard.writeText(outputUrlInput.value).then(function() {
+                        alert('لینک با موفقیت کپی شد!');
+                    }, function(err) {
+                        alert('خطا در کپی کردن لینک: ' + err);
+                    });
+                } catch (err) {
+                    try {
+                        document.execCommand('copy');
+                        alert('لینک با موفقیت کپی شد! (Fallback)');
+                    } catch (e) {
+                        alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
+                    }
+                }
+            } else {
+                alert('هنوز لینکی تولید نشده است.');
+            }
+        });
+    </script>
 
 </body>
 </html>
