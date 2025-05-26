@@ -11,8 +11,8 @@
 
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --card-bg-color: #2c2c2c;
+            --bg-color: #121212; /* کمی تیره‌تر برای کنتراست بهتر با پس‌زمینه روشن‌تر */
+            --card-bg-color: #1e1e1e; /* رنگ پایه برای کانتینر قبل از تصویر */
             --text-color: #e0e0e0;
             --label-color: #b3b3b3;
             --input-bg-color: #3a3a3a;
@@ -23,26 +23,39 @@
             --primary-color: #a0a0ff;
         }
         body {
-            background-image: 
-                linear-gradient(rgba(26, 26, 26, 0.75), rgba(26, 26, 26, 0.85)),
-                url('https://raw.githubusercontent.com/10ium/free-config/refs/heads/main/Archive/Collector/clash/Woman%20Life%20Freedom.webp');
+            background-image: url('https://raw.githubusercontent.com/10ium/free-config/refs/heads/main/Archive/Collector/clash/Woman%20Life%20Freedom.webp');
             background-size: cover; 
             background-position: center center; 
             background-repeat: no-repeat; 
             background-attachment: fixed; 
-            background-color: var(--bg-color);
+            background-color: var(--bg-color); /* رنگ پس‌زمینه اگر تصویر لود نشد */
+            
             color: var(--text-color); 
             font-family: 'Vazirmatn', sans-serif;
-            margin: 0; padding: 20px; display: flex; justify-content: center; align-items: flex-start;
+            margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; /* تغییر به align-items: center برای وسط‌چین عمودی بهتر */
             min-height: 100vh; font-size: 16px; line-height: 1.6;
+            box-sizing: border-box; /* اضافه شده برای محاسبه بهتر padding */
         }
         .container {
-            background-color: rgba(44, 44, 44, 0.90); 
-            backdrop-filter: blur(4px);
-            padding: 25px 30px; border-radius: 8px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); 
-            width: 100%; max-width: 700px; box-sizing: border-box;
+            background-image: 
+                linear-gradient(rgba(26, 26, 26, 0.80), rgba(26, 26, 26, 0.92)), /* لایه تیره کننده برای تصویر کانتینر */
+                url('https://raw.githubusercontent.com/10ium/free-config/refs/heads/main/Archive/Collector/clash/Woman%20Life%20Freedom.png');
+            background-size: cover; 
+            background-position: center center;
+            background-repeat: no-repeat; 
+            
+            padding: 25px 30px; 
+            border-radius: 12px; /* کمی گردتر */
+            border: 1px solid rgba(128, 128, 128, 0.25); 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.75); /* سایه قوی‌تر */
+            width: 100%; 
+            max-width: 700px; 
+            box-sizing: border-box;
             padding-bottom: 30px; 
+            position: relative; 
+            z-index: 1; 
+            margin-top: 20px; /* فاصله از بالا اگر محتوا زیاد است */
+            margin-bottom: 20px; /* فاصله از پایین */
         }
         h1 { color: var(--text-color); text-align: center; margin-bottom: 30px; font-weight: 700; }
         .form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
@@ -105,10 +118,11 @@
         .footer img { width: 18px; height: 18px; margin-left: 10px; vertical-align: middle; border-radius: 4px; }
         .footer span { font-weight: 400; }
          @media (max-width: 600px) {
-            .checkbox-group { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-            .footer { flex-direction: row; justify-content: center; gap: 10px; }
-            .footer a { padding: 6px 12px; font-size: 0.85em; }
-            .footer img { width: 16px; height: 16px; }
+            body { align-items: flex-start; /* برای موبایل ممکن است وسط‌چین عمودی خوب نباشد اگر محتوا زیاد است */ }
+            .container { margin-top: 10px; margin-bottom: 10px; padding: 20px 15px; }
+            .checkbox-group { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+            .checkbox-group label {font-size: 0.85em; padding: 6px 10px;}
+            h1 { font-size: 1.5em; margin-bottom: 20px;}
          }
     </style>
 </head>
@@ -212,10 +226,9 @@
     </div>
 
     <script>
-        // تنظیمات Rate Limiting سمت کاربر
         const MAX_CLICKS_CLIENT = 30; 
-        const TIME_WINDOW_CLIENT_MS = 60 * 60 * 1000; // 1 ساعت به میلی‌ثانیه
-        const TIMEOUT_DURATION_CLIENT_MS = 2 * 60 * 60 * 1000; // 2 ساعت به میلی‌ثانیه
+        const TIME_WINDOW_CLIENT_MS = 60 * 60 * 1000; 
+        const TIMEOUT_DURATION_CLIENT_MS = 2 * 60 * 60 * 1000; 
 
         function getRateLimitData() {
             const data = localStorage.getItem('clientRateLimit');
@@ -248,19 +261,20 @@
                 const currentTime = Date.now();
 
                 if (rateData.blockedUntil && currentTime < rateData.blockedUntil) {
-                    const remainingBlockTimeHours = Math.ceil((rateData.blockedUntil - currentTime) / (60 * 60 * 1000));
-                    const remainingBlockTimeMinutes = Math.ceil(((rateData.blockedUntil - currentTime) % (60 * 60 * 1000)) / (60 * 1000));
+                    const totalRemainingSeconds = Math.ceil((rateData.blockedUntil - currentTime) / 1000);
+                    const remainingHours = Math.floor(totalRemainingSeconds / 3600);
+                    const remainingMinutes = Math.ceil((totalRemainingSeconds % 3600) / 60);
                     
                     let timeLeftMessage = "";
-                    if (remainingBlockTimeHours > 0) {
-                        timeLeftMessage = `حدود ${remainingBlockTimeHours} ساعت`;
-                        if(remainingBlockTimeMinutes > 0 && remainingBlockTimeHours === 1) { // دقیق‌تر برای کمتر از دو ساعت
-                           timeLeftMessage = `حدود ${remainingBlockTimeMinutes} دقیقه`;
-                        } else if (remainingBlockTimeMinutes > 0) {
-                           timeLeftMessage += ` و ${remainingBlockTimeMinutes} دقیقه`;
+                    if (remainingHours > 0) {
+                        timeLeftMessage = `حدود ${remainingHours} ساعت`;
+                        if (remainingMinutes > 0) {
+                           timeLeftMessage += ` و ${remainingMinutes} دقیقه`;
                         }
+                    } else if (remainingMinutes > 0) {
+                        timeLeftMessage = `حدود ${remainingMinutes} دقیقه`;
                     } else {
-                        timeLeftMessage = `حدود ${remainingBlockTimeMinutes} دقیقه`;
+                        timeLeftMessage = "کمتر از یک دقیقه";
                     }
                     alert(`شما به دلیل تعداد زیاد درخواست، موقتاً برای ${timeLeftMessage} دیگر نمی‌توانید از این قابلیت استفاده کنید.`);
                     return; 
@@ -279,6 +293,7 @@
                     alert(`شما بیش از ${MAX_CLICKS_CLIENT} بار در یک ساعت درخواست داده‌اید. لطفاً حدود ۲ ساعت دیگر دوباره امتحان کنید.`);
                     rateData.blockedUntil = currentTime + TIMEOUT_DURATION_CLIENT_MS;
                     setRateLimitData(rateData);
+                    if(outputUrlField) outputUrlField.value = 'محدودیت استفاده اعمال شد.'; // پیام در فیلد خروجی
                     return; 
                 }
 
@@ -358,18 +373,18 @@
                 }
             });
         } else {
-            console.error("Generate button not found!");
+            console.error("Generate button ('generate-btn') not found!");
         }
 
         const copyBtn = document.getElementById('copy-btn');
         if (copyBtn) {
             copyBtn.addEventListener('click', function() {
-                const outputUrlInput = document.getElementById('output-url'); // باید دوباره اینجا بگیریم
-                if (outputUrlInput && outputUrlInput.value && outputUrlInput.value !== 'در حال پردازش...') {
-                    outputUrlInput.select();
-                    outputUrlInput.setSelectionRange(0, 99999);
+                const currentOutputUrlField = document.getElementById('output-url'); // اطمینان از دریافت مجدد المنت
+                if (currentOutputUrlField && currentOutputUrlField.value && currentOutputUrlField.value !== 'در حال پردازش...' && currentOutputUrlField.value !== 'محدودیت استفاده اعمال شد.') {
+                    currentOutputUrlField.select();
+                    currentOutputUrlField.setSelectionRange(0, 99999);
                     try {
-                         navigator.clipboard.writeText(outputUrlInput.value).then(function() {
+                         navigator.clipboard.writeText(currentOutputUrlField.value).then(function() {
                              alert('لینک با موفقیت کپی شد!');
                          }, function(err) {
                             try {
@@ -387,15 +402,15 @@
                              alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
                         }
                     }
-                } else if (outputUrlInput && (outputUrlInput.value === 'در حال پردازش...')) {
-                    alert('لطفاً تا پایان تولید لینک صبر کنید.');
+                } else if (currentOutputUrlField && (currentOutputUrlField.value === 'در حال پردازش...' || currentOutputUrlField.value === 'محدودیت استفاده اعمال شد.')) {
+                    alert('لطفاً تا پایان عملیات یا رفع محدودیت صبر کنید.');
                 }
                 else {
                     alert('هنوز لینکی تولید نشده است.');
                 }
             });
         } else {
-             console.error("Copy button not found!");
+             console.error("Copy button ('copy-btn') not found!");
         }
     </script>
 </body>
