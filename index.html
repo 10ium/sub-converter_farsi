@@ -85,8 +85,8 @@
         }
         
         .form-group textarea {
-            direction: rtl;
-            text-align: right;
+            direction: rtl; /* Ensures input text is RTL */
+            text-align: right; /* Ensures input text is right-aligned */
             min-height: 80px;
             resize: vertical;
         }
@@ -94,7 +94,8 @@
         .form-group input::placeholder,
         .form-group textarea::placeholder {
              color: #888;
-             text-align: right;
+             text-align: right; /* Ensures placeholder is right-aligned */
+             direction: rtl; /* Further ensures placeholder is RTL */
         }
         
         .form-group input[type="text"],
@@ -133,9 +134,8 @@
          }
 
         .checkbox-group input[type="checkbox"] {
-            /* Changed Here: Added margin-right for RTL spacing */
             margin-left: 0; 
-            margin-right: 8px; /* This adds space between text and checkbox in RTL */
+            margin-right: 8px; 
             transform: scale(1.1);
         }
 
@@ -249,9 +249,7 @@
 
         <div class="form-group">
             <label for="sub-url">لینک(های) اشتراک:</label>
-            <textarea id="sub-url" rows="4" placeholder="لینک اشتراک خود را وارد کنید.
-			برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید.
-			از لینک اشتراک معمولی پشتیبانی نمیکند به بیس 64 تبدیل کنید."></textarea>
+            <textarea id="sub-url" rows="4" placeholder="لینک اشتراک خود را وارد کنید.&#10;برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید.&#10;از لینک اشتراک معمولی پشتیبانی نمیکند به بیس 64 تبدیل کنید."></textarea>
         </div>
 
         <div class="form-group">
@@ -328,7 +326,7 @@
                 <img src="https://www.google.com/s2/favicons?sz=32&domain=twitter.com" alt="Twitter">
                 <span>توییتر</span>
             </a>
-            <a href="https://tvtime.com/r/38HD3" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.tvtime.com/en/user/43351079/profile" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.google.com/s2/favicons?sz=32&domain=tvtime.com" alt="TV Time">
                 <span>تی‌وی تایم</span> 
             </a>
