@@ -45,7 +45,7 @@
             width: 100%;
             max-width: 700px;
             box-sizing: border-box;
-            padding-bottom: 30px; /* Add some padding for the footer */
+            padding-bottom: 30px; 
         }
 
         h1 {
@@ -103,7 +103,6 @@
             text-align: left;
         }
         
-        /* Apply Vazir font to options within select */
         .form-group select option {
             font-family: 'Vazirmatn', sans-serif;
             background-color: var(--input-bg-color);
@@ -112,9 +111,8 @@
 
         .checkbox-group {
             display: grid;
-            /* Adjust grid to fit more columns */
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-            gap: 12px; /* Slightly increase gap */
+            gap: 12px; 
             margin-top: 10px;
             text-align: right;
         }
@@ -127,17 +125,18 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.2s;
-            justify-content: flex-end; /* Keep text to the right */
-            font-size: 0.9em; /* Slightly smaller font if needed */
+            justify-content: flex-end; 
+            font-size: 0.9em; 
         }
          .checkbox-group label:hover {
             background-color: #4a4a4a;
          }
 
         .checkbox-group input[type="checkbox"] {
-            margin-left: 10px; /* Keep space */
-            margin-right: 0;
-            transform: scale(1.1); /* Slightly smaller scale */
+            /* Changed Here: Added margin-right for RTL spacing */
+            margin-left: 0; 
+            margin-right: 8px; /* This adds space between text and checkbox in RTL */
+            transform: scale(1.1);
         }
 
         .button-group {
@@ -178,7 +177,6 @@
             border-color: var(--primary-color);
         }
 
-        /* Footer Styles */
         .footer {
             margin-top: 50px; 
             padding-top: 25px;
@@ -330,13 +328,15 @@
             </a>
             <a href="https://www.tvtime.com/en/user/43351079/profile" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.google.com/s2/favicons?sz=32&domain=tvtime.com" alt="TV Time">
-                <span>تی‌وی تایم</span> </a>
+                <span>تی‌وی تایم</span> 
+            </a>
             <a href="https://linktr.ee/coldwater_10" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.google.com/s2/favicons?sz=32&domain=linktr.ee" alt="Linktree">
                 <span>لینک‌تری</span>
             </a>
         </div>
-        </div>
+
+    </div>
 
     <script>
         document.getElementById('generate-btn').addEventListener('click', function() {
@@ -363,7 +363,6 @@
                 params.append('config', configInput);
             }
 
-            // Existing checkboxes
             params.append('emoji', document.getElementById('emoji').checked);
             params.append('udp', document.getElementById('udp').checked);
             params.append('tfo', document.getElementById('tfo').checked);
@@ -371,17 +370,13 @@
             params.append('scv', document.getElementById('scv').checked);
             params.append('fdn', document.getElementById('fdn').checked);
             params.append('new_name', document.getElementById('new_name').checked);
-
-            // New checkboxes
             params.append('insert', document.getElementById('insert').checked);
             params.append('xudp', document.getElementById('xudp').checked);
             params.append('tls13', document.getElementById('tls13').checked);
             params.append('sort', document.getElementById('sort').checked);
             params.append('append_type', document.getElementById('append_type').checked);
             params.append('f_un', document.getElementById('f_un').checked);
-
-
-            params.append('list', 'false'); // Kept this as false, add a checkbox if needed
+            params.append('list', 'false');
 
             const finalUrl = baseUrl + params.toString();
             document.getElementById('output-url').value = finalUrl;
