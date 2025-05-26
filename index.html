@@ -23,13 +23,25 @@
             --primary-color: #a0a0ff;
         }
         body {
-            background-color: var(--bg-color); color: var(--text-color); font-family: 'Vazirmatn', sans-serif;
+            background-image: 
+                linear-gradient(rgba(26, 26, 26, 0.75), rgba(26, 26, 26, 0.85)),
+                url('https://raw.githubusercontent.com/10ium/free-config/refs/heads/main/Archive/Collector/clash/Woman%20Life%20Freedom.webp');
+            background-size: cover; 
+            background-position: center center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            background-color: var(--bg-color);
+            color: var(--text-color); 
+            font-family: 'Vazirmatn', sans-serif;
             margin: 0; padding: 20px; display: flex; justify-content: center; align-items: flex-start;
             min-height: 100vh; font-size: 16px; line-height: 1.6;
         }
         .container {
-            background-color: var(--card-bg-color); padding: 25px 30px; border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); width: 100%; max-width: 700px; box-sizing: border-box;
+            background-color: rgba(44, 44, 44, 0.90); 
+            backdrop-filter: blur(4px);
+            padding: 25px 30px; border-radius: 8px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); 
+            width: 100%; max-width: 700px; box-sizing: border-box;
             padding-bottom: 30px; 
         }
         h1 { color: var(--text-color); text-align: center; margin-bottom: 30px; font-weight: 700; }
@@ -105,9 +117,9 @@
         <h1>ابزار تبدیل اشتراک</h1>
 
         <div class="form-group">
-            <label for="sub-url">لینک(های) اشتراک:</label>
+            <label for="sub-url">لینک های اشتراک:</label>
             <textarea id="sub-url" rows="4" 
-                      placeholder="لینک اشتراک خود را وارد کنید.&#10;برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید.&#10;اگر از لینک اشتراک معمولی (نیاز به دانلود) استفاده می‌کنید، تیک «تبدیل به بیس ۶۴» را فعال کنید."></textarea>
+                      placeholder="لینک های اشتراک خود را وارد کنید.&#10;برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید.&#10;اگر از لینک اشتراک معمولی استفاده می‌کنید، تیک «تبدیل به بیس ۶۴» را فعال کنید."></textarea>
         </div>
 
         <div class="form-group">
@@ -200,171 +212,191 @@
     </div>
 
     <script>
-// تنظیمات Rate Limiting سمت کاربر
+        // تنظیمات Rate Limiting سمت کاربر
+        const MAX_CLICKS_CLIENT = 30; 
+        const TIME_WINDOW_CLIENT_MS = 60 * 60 * 1000; // 1 ساعت به میلی‌ثانیه
+        const TIMEOUT_DURATION_CLIENT_MS = 2 * 60 * 60 * 1000; // 2 ساعت به میلی‌ثانیه
 
-const MAX_CLICKS_CLIENT = 30; // حداکثر کلیک مجاز
-
-const TIME_WINDOW_CLIENT_MS = 60 * 60 * 1000; // ۱ ساعت
-
-const TIMEOUT_DURATION_CLIENT_MS = 2 * 60 * 60 * 1000; // ۲ ساعت
-
-
-function getRateLimitData() {
-    const data = localStorage.getItem('clientRateLimit');
-    if (data) {
-        try {
-            return JSON.parse(data);
-        } catch (e) {
-            console.error("Error parsing rate limit data from localStorage:", e);
+        function getRateLimitData() {
+            const data = localStorage.getItem('clientRateLimit');
+            if (data) {
+                try {
+                    return JSON.parse(data);
+                } catch (e) {
+                    console.error("Error parsing rate limit data from localStorage:", e);
+                    localStorage.removeItem('clientRateLimit'); 
+                    return { clicks: 0, windowStart: 0, blockedUntil: 0 };
+                }
+            }
             return { clicks: 0, windowStart: 0, blockedUntil: 0 };
         }
-    }
-    return { clicks: 0, windowStart: 0, blockedUntil: 0 };
-}
 
-function setRateLimitData(data) {
-    localStorage.setItem('clientRateLimit', JSON.stringify(data));
-}
-
-document.getElementById('generate-btn').addEventListener('click', async function() {
-    let rateData = getRateLimitData();
-    const currentTime = Date.now();
-
-    if (rateData.blockedUntil && currentTime < rateData.blockedUntil) {
-        const remainingBlockTimeMinutes = Math.ceil((rateData.blockedUntil - currentTime) / (60 * 1000));
-        alert(`شما به دلیل تعداد زیاد درخواست، موقتاً برای حدود ${remainingBlockTimeMinutes} دقیقه دیگر نمی‌توانید از این قابلیت استفاده کنید.`);
-        return;
-    }
-
-    if (currentTime - rateData.windowStart > TIME_WINDOW_CLIENT_MS || (rateData.blockedUntil && currentTime > rateData.blockedUntil)) {
-        rateData.clicks = 0;
-        rateData.windowStart = currentTime;
-        rateData.blockedUntil = 0;
-    }
-
-    rateData.clicks++;
-
-    console.log(`Client clicks: ${rateData.clicks}, windowStart: ${new Date(rateData.windowStart).toLocaleTimeString()}`);
-
-    if (rateData.clicks > MAX_CLICKS_CLIENT) {
-        alert(`شما بیش از ${MAX_CLICKS_CLIENT} بار در یک ساعت درخواست داده‌اید. لطفاً حدود ۲ ساعت دیگر دوباره امتحان کنید.`);
-        rateData.blockedUntil = currentTime + TIMEOUT_DURATION_CLIENT_MS;
-        setRateLimitData(rateData);
-        return;
-    }
-
-    // عملیات بعد از تأیید مجاز بودن کلیک‌ها
-    setRateLimitData(rateData);
-    // کد اصلی اجرای دکمه
-});
-
-            setRateLimitData(rateData);
-
-            const useCustomWorker = document.getElementById('use_custom_base64_worker').checked;
-            const subUrlInput = document.getElementById('sub-url').value.trim();
-            const mainConverterApiUrl = document.getElementById('api-url').value.trim(); 
-
-            if (!subUrlInput) {
-                alert('لطفاً حداقل یک لینک اشتراک وارد کنید.');
-                return;
+        function setRateLimitData(data) {
+            try {
+                localStorage.setItem('clientRateLimit', JSON.stringify(data));
+            } catch (e) {
+                console.error("Error setting rate limit data to localStorage:", e);
             }
+        }
 
-            const target = document.getElementById('target').value;
-            const configInput = document.getElementById('config').value.trim();
-            const options = {};
-            document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => {
-                if (cb.id !== 'use_custom_base64_worker') {
-                    options[cb.id] = cb.checked;
-                }
-            });
-            options['list'] = 'false'; 
+        const generateBtn = document.getElementById('generate-btn');
+        const outputUrlField = document.getElementById('output-url');
 
-            document.getElementById('output-url').value = 'در حال پردازش...';
+        if (generateBtn) {
+            generateBtn.addEventListener('click', async function() {
+                let rateData = getRateLimitData();
+                const currentTime = Date.now();
 
-            if (useCustomWorker) {
-                const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev'; 
-
-                try {
-                    const response = await fetch(workerUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            subUrl: subUrlInput, 
-                            target: target, 
-                            config: configInput || null,
-                            options: options 
-                        })
-                    });
-
-                    const responseData = await response.json();
-
-                    if (!response.ok) {
-                        throw new Error(responseData.error || `خطا از سرور واسط: ${response.status} ${response.statusText}`);
-                    }
+                if (rateData.blockedUntil && currentTime < rateData.blockedUntil) {
+                    const remainingBlockTimeHours = Math.ceil((rateData.blockedUntil - currentTime) / (60 * 60 * 1000));
+                    const remainingBlockTimeMinutes = Math.ceil(((rateData.blockedUntil - currentTime) % (60 * 60 * 1000)) / (60 * 1000));
                     
-                    document.getElementById('output-url').value = responseData.finalUrl;
-
-                } catch (error) {
-                    alert(`خطا در ارتباط با سرور واسط: ${error.message}`);
-                    document.getElementById('output-url').value = '';
+                    let timeLeftMessage = "";
+                    if (remainingBlockTimeHours > 0) {
+                        timeLeftMessage = `حدود ${remainingBlockTimeHours} ساعت`;
+                        if(remainingBlockTimeMinutes > 0 && remainingBlockTimeHours === 1) { // دقیق‌تر برای کمتر از دو ساعت
+                           timeLeftMessage = `حدود ${remainingBlockTimeMinutes} دقیقه`;
+                        } else if (remainingBlockTimeMinutes > 0) {
+                           timeLeftMessage += ` و ${remainingBlockTimeMinutes} دقیقه`;
+                        }
+                    } else {
+                        timeLeftMessage = `حدود ${remainingBlockTimeMinutes} دقیقه`;
+                    }
+                    alert(`شما به دلیل تعداد زیاد درخواست، موقتاً برای ${timeLeftMessage} دیگر نمی‌توانید از این قابلیت استفاده کنید.`);
+                    return; 
                 }
 
-            } else {
-                if (!mainConverterApiUrl) {
-                    alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.');
-                    document.getElementById('output-url').value = '';
+                if (currentTime - rateData.windowStart > TIME_WINDOW_CLIENT_MS || (rateData.blockedUntil && currentTime > rateData.blockedUntil)) {
+                    rateData.clicks = 0;
+                    rateData.windowStart = currentTime;
+                    rateData.blockedUntil = 0; 
+                }
+
+                rateData.clicks++;
+                console.log(`Client clicks: ${rateData.clicks} within this hour, windowStart: ${new Date(rateData.windowStart).toLocaleTimeString()}`);
+
+                if (rateData.clicks > MAX_CLICKS_CLIENT) {
+                    alert(`شما بیش از ${MAX_CLICKS_CLIENT} بار در یک ساعت درخواست داده‌اید. لطفاً حدود ۲ ساعت دیگر دوباره امتحان کنید.`);
+                    rateData.blockedUntil = currentTime + TIMEOUT_DURATION_CLIENT_MS;
+                    setRateLimitData(rateData);
+                    return; 
+                }
+
+                setRateLimitData(rateData);
+
+                const useCustomWorker = document.getElementById('use_custom_base64_worker').checked;
+                const subUrlInput = document.getElementById('sub-url').value.trim();
+                const mainConverterApiUrl = document.getElementById('api-url').value.trim(); 
+
+                if (!subUrlInput) {
+                    alert('لطفاً حداقل یک لینک اشتراک وارد کنید.');
                     return;
                 }
-                
-                const baseUrl = mainConverterApiUrl.endsWith('?') ? mainConverterApiUrl : mainConverterApiUrl + '?';
-                const params = new URLSearchParams();
-                params.append('url', subUrlInput);
-                params.append('target', target);
-                if (configInput) {
-                    params.append('config', configInput);
-                }
-                for (const key in options) {
-                    if (options.hasOwnProperty(key)) {
-                         params.append(key, options[key]);
-                    }
-                }
-                
-                const finalUrl = baseUrl + params.toString();
-                document.getElementById('output-url').value = finalUrl;
-            }
-        });
 
-        document.getElementById('copy-btn').addEventListener('click', function() {
-            const outputUrlInput = document.getElementById('output-url');
-            if (outputUrlInput.value && outputUrlInput.value !== 'در حال پردازش...') {
-                outputUrlInput.select();
-                outputUrlInput.setSelectionRange(0, 99999);
-                try {
-                     navigator.clipboard.writeText(outputUrlInput.value).then(function() {
-                         alert('لینک با موفقیت کپی شد!');
-                     }, function(err) {
+                const target = document.getElementById('target').value;
+                const configInput = document.getElementById('config').value.trim();
+                const options = {};
+                document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => {
+                    if (cb.id !== 'use_custom_base64_worker') {
+                        options[cb.id] = cb.checked;
+                    }
+                });
+                options['list'] = 'false'; 
+
+                if(outputUrlField) outputUrlField.value = 'در حال پردازش...';
+
+                if (useCustomWorker) {
+                    const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev'; 
+
+                    try {
+                        const response = await fetch(workerUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                subUrl: subUrlInput, 
+                                target: target, 
+                                config: configInput || null,
+                                options: options 
+                            })
+                        });
+
+                        const responseData = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(responseData.error || `خطا از سرور واسط: ${response.status} ${response.statusText}`);
+                        }
+                        
+                        if(outputUrlField) outputUrlField.value = responseData.finalUrl;
+
+                    } catch (error) {
+                        alert(`خطا در ارتباط با سرور واسط: ${error.message}`);
+                        if(outputUrlField) outputUrlField.value = '';
+                    }
+
+                } else {
+                    if (!mainConverterApiUrl) {
+                        alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.');
+                        if(outputUrlField) outputUrlField.value = '';
+                        return;
+                    }
+                    
+                    const baseUrl = mainConverterApiUrl.endsWith('?') ? mainConverterApiUrl : mainConverterApiUrl + '?';
+                    const params = new URLSearchParams();
+                    params.append('url', subUrlInput);
+                    params.append('target', target);
+                    if (configInput) {
+                        params.append('config', configInput);
+                    }
+                    for (const key in options) {
+                        if (options.hasOwnProperty(key)) {
+                             params.append(key, options[key]);
+                        }
+                    }
+                    
+                    const finalUrl = baseUrl + params.toString();
+                    if(outputUrlField) outputUrlField.value = finalUrl;
+                }
+            });
+        } else {
+            console.error("Generate button not found!");
+        }
+
+        const copyBtn = document.getElementById('copy-btn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', function() {
+                const outputUrlInput = document.getElementById('output-url'); // باید دوباره اینجا بگیریم
+                if (outputUrlInput && outputUrlInput.value && outputUrlInput.value !== 'در حال پردازش...') {
+                    outputUrlInput.select();
+                    outputUrlInput.setSelectionRange(0, 99999);
+                    try {
+                         navigator.clipboard.writeText(outputUrlInput.value).then(function() {
+                             alert('لینک با موفقیت کپی شد!');
+                         }, function(err) {
+                            try {
+                                document.execCommand('copy');
+                                alert('لینک با موفقیت کپی شد! (Fallback)');
+                            } catch (e) {
+                                alert('خطا در کپی کردن لینک. لطفاً دستی کپی کنید.');
+                            }
+                         });
+                    } catch (err) {
                         try {
                             document.execCommand('copy');
                             alert('لینک با موفقیت کپی شد! (Fallback)');
                         } catch (e) {
-                            alert('خطا در کپی کردن لینک. لطفاً دستی کپی کنید.');
+                             alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
                         }
-                     });
-                } catch (err) {
-                    try {
-                        document.execCommand('copy');
-                        alert('لینک با موفقیت کپی شد! (Fallback)');
-                    } catch (e) {
-                         alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
                     }
+                } else if (outputUrlInput && (outputUrlInput.value === 'در حال پردازش...')) {
+                    alert('لطفاً تا پایان تولید لینک صبر کنید.');
                 }
-            } else if (outputUrlInput.value === 'در حال پردازش...') {
-                alert('لطفاً تا پایان تولید لینک صبر کنید.');
-            }
-            else {
-                alert('هنوز لینکی تولید نشده است.');
-            }
-        });
+                else {
+                    alert('هنوز لینکی تولید نشده است.');
+                }
+            });
+        } else {
+             console.error("Copy button not found!");
+        }
     </script>
 </body>
 </html>
