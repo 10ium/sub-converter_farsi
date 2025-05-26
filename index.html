@@ -106,7 +106,8 @@
 
         <div class="form-group">
             <label for="sub-url">لینک(های) اشتراک:</label>
-            <textarea id="sub-url" rows="4" placeholder="لینک اشتراک خود را وارد کنید.&#10;برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید."></textarea>
+            <textarea id="sub-url" rows="4" 
+                      placeholder="لینک اشتراک خود را وارد کنید.&#10;برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید.&#10;اگر از لینک اشتراک معمولی (نیاز به دانلود) استفاده می‌کنید، تیک «تبدیل به بیس ۶۴» را فعال کنید."></textarea>
         </div>
 
         <div class="form-group">
@@ -199,7 +200,66 @@
     </div>
 
     <script>
-        document.getElementById('generate-btn').addEventListener('click', async function() {
+// تنظیمات Rate Limiting سمت کاربر
+
+const MAX_CLICKS_CLIENT = 30; // حداکثر کلیک مجاز
+
+const TIME_WINDOW_CLIENT_MS = 60 * 60 * 1000; // ۱ ساعت
+
+const TIMEOUT_DURATION_CLIENT_MS = 2 * 60 * 60 * 1000; // ۲ ساعت
+
+
+function getRateLimitData() {
+    const data = localStorage.getItem('clientRateLimit');
+    if (data) {
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            console.error("Error parsing rate limit data from localStorage:", e);
+            return { clicks: 0, windowStart: 0, blockedUntil: 0 };
+        }
+    }
+    return { clicks: 0, windowStart: 0, blockedUntil: 0 };
+}
+
+function setRateLimitData(data) {
+    localStorage.setItem('clientRateLimit', JSON.stringify(data));
+}
+
+document.getElementById('generate-btn').addEventListener('click', async function() {
+    let rateData = getRateLimitData();
+    const currentTime = Date.now();
+
+    if (rateData.blockedUntil && currentTime < rateData.blockedUntil) {
+        const remainingBlockTimeMinutes = Math.ceil((rateData.blockedUntil - currentTime) / (60 * 1000));
+        alert(`شما به دلیل تعداد زیاد درخواست، موقتاً برای حدود ${remainingBlockTimeMinutes} دقیقه دیگر نمی‌توانید از این قابلیت استفاده کنید.`);
+        return;
+    }
+
+    if (currentTime - rateData.windowStart > TIME_WINDOW_CLIENT_MS || (rateData.blockedUntil && currentTime > rateData.blockedUntil)) {
+        rateData.clicks = 0;
+        rateData.windowStart = currentTime;
+        rateData.blockedUntil = 0;
+    }
+
+    rateData.clicks++;
+
+    console.log(`Client clicks: ${rateData.clicks}, windowStart: ${new Date(rateData.windowStart).toLocaleTimeString()}`);
+
+    if (rateData.clicks > MAX_CLICKS_CLIENT) {
+        alert(`شما بیش از ${MAX_CLICKS_CLIENT} بار در یک ساعت درخواست داده‌اید. لطفاً حدود ۲ ساعت دیگر دوباره امتحان کنید.`);
+        rateData.blockedUntil = currentTime + TIMEOUT_DURATION_CLIENT_MS;
+        setRateLimitData(rateData);
+        return;
+    }
+
+    // عملیات بعد از تأیید مجاز بودن کلیک‌ها
+    setRateLimitData(rateData);
+    // کد اصلی اجرای دکمه
+});
+
+            setRateLimitData(rateData);
+
             const useCustomWorker = document.getElementById('use_custom_base64_worker').checked;
             const subUrlInput = document.getElementById('sub-url').value.trim();
             const mainConverterApiUrl = document.getElementById('api-url').value.trim(); 
@@ -222,7 +282,7 @@
             document.getElementById('output-url').value = 'در حال پردازش...';
 
             if (useCustomWorker) {
-                const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev'; // آدرس Worker شما
+                const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev'; 
 
                 try {
                     const response = await fetch(workerUrl, {
