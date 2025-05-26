@@ -22,234 +22,91 @@
             --button-hover-bg: #0056b3;
             --primary-color: #a0a0ff;
         }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Vazirmatn', sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            font-size: 16px;
-            line-height: 1.6;
+            background-color: var(--bg-color); color: var(--text-color); font-family: 'Vazirmatn', sans-serif;
+            margin: 0; padding: 20px; display: flex; justify-content: center; align-items: flex-start;
+            min-height: 100vh; font-size: 16px; line-height: 1.6;
         }
-
         .container {
-            background-color: var(--card-bg-color);
-            padding: 25px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 700px;
-            box-sizing: border-box;
+            background-color: var(--card-bg-color); padding: 25px 30px; border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); width: 100%; max-width: 700px; box-sizing: border-box;
             padding-bottom: 30px; 
         }
-
-        h1 {
-            color: var(--text-color);
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: 700;
+        h1 { color: var(--text-color); text-align: center; margin-bottom: 30px; font-weight: 700; }
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--label-color); font-weight: 700; }
+        .form-group input[type="text"], .form-group textarea, .form-group select {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--input-border-color);
+            background-color: var(--input-bg-color); color: var(--text-color); border-radius: 5px;
+            font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; font-size: 0.95em;
+            direction: ltr; text-align: left;
         }
-
-        .form-group {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--label-color);
-            font-weight: 700;
-        }
-
-        .form-group input[type="text"],
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--input-border-color);
-            background-color: var(--input-bg-color);
-            color: var(--text-color);
-            border-radius: 5px;
-            font-family: 'Vazirmatn', sans-serif;
-            box-sizing: border-box;
-            font-size: 0.95em;
-            direction: ltr;
-            text-align: left;
-        }
-        
         .form-group textarea {
-            direction: rtl; /* Ensures input text is RTL */
-            text-align: right; /* Ensures input text is right-aligned */
-            min-height: 80px;
-            resize: vertical;
+            direction: rtl; text-align: right; min-height: 80px; resize: vertical;
         }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-             color: #888;
-             text-align: right; /* Ensures placeholder is right-aligned */
-             direction: rtl; /* Further ensures placeholder is RTL */
+        .form-group input::placeholder, .form-group textarea::placeholder {
+             color: #888; text-align: right; direction: rtl; 
         }
-        
-        .form-group input[type="text"],
-        .form-group select {
-            direction: ltr;
-            text-align: left;
-        }
-        
+        .form-group input[type="text"], .form-group select { direction: ltr; text-align: left; }
         .form-group select option {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: var(--input-bg-color);
-            color: var(--text-color);
+            font-family: 'Vazirmatn', sans-serif; background-color: var(--input-bg-color); color: var(--text-color);
         }
-
         .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-            gap: 12px; 
-            margin-top: 10px;
-            text-align: right;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 12px; margin-top: 10px; text-align: right;
         }
-
         .checkbox-group label {
-            display: flex;
-            align-items: center;
-            background-color: var(--input-bg-color);
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            justify-content: flex-end; 
-            font-size: 0.9em; 
+            display: flex; align-items: center; background-color: var(--input-bg-color);
+            padding: 8px 12px; border-radius: 5px; cursor: pointer; transition: background-color 0.2s;
+            justify-content: flex-end; font-size: 0.9em; 
         }
-         .checkbox-group label:hover {
-            background-color: #4a4a4a;
-         }
-
-        .checkbox-group input[type="checkbox"] {
-            margin-left: 0; 
-            margin-right: 8px; 
-            transform: scale(1.1);
-        }
-
-        .button-group {
-            text-align: center;
-            margin-top: 30px;
-        }
-
+        .checkbox-group label:hover { background-color: #4a4a4a; }
+        .checkbox-group input[type="checkbox"] { margin-left: 0; margin-right: 8px; transform: scale(1.1); }
+        .button-group { text-align: center; margin-top: 30px; }
         button {
-            background-color: var(--button-bg-color);
-            color: var(--button-text-color);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin: 5px;
+            background-color: var(--button-bg-color); color: var(--button-text-color); border: none;
+            padding: 12px 25px; border-radius: 5px; font-family: 'Vazirmatn', sans-serif;
+            font-size: 1.1em; cursor: pointer; transition: background-color 0.3s ease; margin: 5px;
         }
-
-        button:hover {
-            background-color: var(--button-hover-bg);
-        }
-         button.copy-btn {
-            background-color: #28a745;
-         }
-         button.copy-btn:hover {
-            background-color: #218838;
-         }
-
-        .output-group {
-            margin-top: 30px;
-        }
+        button:hover { background-color: var(--button-hover-bg); }
+        button.copy-btn { background-color: #28a745; }
+        button.copy-btn:hover { background-color: #218838; }
+        .output-group { margin-top: 30px; }
         .output-group input {
-            direction: ltr;
-            text-align: left;
-            background-color: #111;
-            border-color: var(--primary-color);
+            direction: ltr; text-align: left; background-color: #111; border-color: var(--primary-color);
         }
-
         .footer {
-            margin-top: 50px; 
-            padding-top: 25px;
-            border-top: 1px solid var(--input-border-color);
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap; 
-            gap: 15px; 
+            margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--input-border-color);
+            text-align: center; display: flex; justify-content: center; align-items: center;
+            flex-wrap: wrap; gap: 15px; 
         }
-
         .footer a {
-            display: inline-flex; 
-            align-items: center;
-            color: var(--label-color);
-            text-decoration: none;
-            font-size: 0.9em;
-            transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            padding: 8px 15px;
-            background-color: #333; 
-            border-radius: 25px; 
+            display: inline-flex; align-items: center; color: var(--label-color); text-decoration: none;
+            font-size: 0.9em; transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 8px 15px; background-color: #333; border-radius: 25px; 
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-
         .footer a:hover {
-            color: var(--text-color);
-            background-color: #4f4f4f; 
-            transform: translateY(-3px); 
+            color: var(--text-color); background-color: #4f4f4f; transform: translateY(-3px); 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-
-        .footer img {
-            width: 18px; 
-            height: 18px;
-            margin-left: 10px; 
-            vertical-align: middle; 
-            border-radius: 4px; 
-        }
-
-        .footer span {
-            font-weight: 400;
-        }
-        
+        .footer img { width: 18px; height: 18px; margin-left: 10px; vertical-align: middle; border-radius: 4px; }
+        .footer span { font-weight: 400; }
          @media (max-width: 600px) {
-            .checkbox-group {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-            .footer {
-                flex-direction: row; 
-                justify-content: center; 
-                gap: 10px;
-            }
-             .footer a {
-                 padding: 6px 12px;
-                 font-size: 0.85em;
-             }
-             .footer img {
-                width: 16px;
-                height: 16px;
-             }
+            .checkbox-group { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+            .footer { flex-direction: row; justify-content: center; gap: 10px; }
+            .footer a { padding: 6px 12px; font-size: 0.85em; }
+            .footer img { width: 16px; height: 16px; }
          }
-
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1>ابزار تبدیل اشتراک</h1>
 
         <div class="form-group">
             <label for="sub-url">لینک(های) اشتراک:</label>
-            <textarea id="sub-url" rows="4" placeholder="لینک اشتراک خود را وارد کنید.&#10;برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید.&#10;از لینک اشتراک معمولی پشتیبانی نمیکند به بیس 64 تبدیل کنید."></textarea>
+            <textarea id="sub-url" rows="4" placeholder="لینک اشتراک خود را وارد کنید.&#10;برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید."></textarea>
         </div>
 
         <div class="form-group">
@@ -302,6 +159,10 @@
                 <label> مرتب‌سازی نودها<input type="checkbox" id="sort"></label>
                 <label> افزودن نوع نود<input type="checkbox" id="append_type"></label>
                 <label> فیلتر نودهای ناسازگار<input type="checkbox" id="f_un"></label>
+                <label title="در صورت فعال بودن، لینک اشتراک توسط سرور واسط دانلود، به Base64 تبدیل و سپس به API مبدل ارسال می‌شود. این گزینه ممکن است برای برخی لینک‌های خاص مفید باشد.">
+                    فعال‌سازی پردازش پیشرفته (Base64 با سرور واسط)
+                    <input type="checkbox" id="use_custom_base64_worker">
+                </label>
             </div>
         </div>
 
@@ -335,63 +196,99 @@
                 <span>لینک‌تری</span>
             </a>
         </div>
-
     </div>
 
     <script>
-        document.getElementById('generate-btn').addEventListener('click', function() {
-            const apiUrl = document.getElementById('api-url').value.trim();
-            if (!apiUrl) {
-                alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.');
-                return;
-            }
-
-            const baseUrl = apiUrl.endsWith('?') ? apiUrl : apiUrl + '?';
-            const params = new URLSearchParams();
-
+        document.getElementById('generate-btn').addEventListener('click', async function() {
+            const useCustomWorker = document.getElementById('use_custom_base64_worker').checked;
             const subUrlInput = document.getElementById('sub-url').value.trim();
+            const mainConverterApiUrl = document.getElementById('api-url').value.trim(); 
+
             if (!subUrlInput) {
                 alert('لطفاً حداقل یک لینک اشتراک وارد کنید.');
                 return;
             }
-            params.append('url', subUrlInput);
 
-            params.append('target', document.getElementById('target').value);
-
+            const target = document.getElementById('target').value;
             const configInput = document.getElementById('config').value.trim();
-            if (configInput) {
-                params.append('config', configInput);
+            const options = {};
+            document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => {
+                if (cb.id !== 'use_custom_base64_worker') {
+                    options[cb.id] = cb.checked;
+                }
+            });
+            options['list'] = 'false'; 
+
+            document.getElementById('output-url').value = 'در حال پردازش...';
+
+            if (useCustomWorker) {
+                const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev'; // <-- آدرس Worker شما
+
+                try {
+                    const response = await fetch(workerUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            subUrl: subUrlInput, 
+                            target: target, 
+                            config: configInput || null, // ارسال null اگر خالی است
+                            options: options 
+                        })
+                    });
+
+                    const responseData = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(responseData.error || `خطا از سرور واسط: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    document.getElementById('output-url').value = responseData.finalUrl;
+
+                } catch (error) {
+                    alert(`خطا در ارتباط با سرور واسط: ${error.message}`);
+                    document.getElementById('output-url').value = '';
+                }
+
+            } else {
+                if (!mainConverterApiUrl) {
+                    alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.');
+                    document.getElementById('output-url').value = '';
+                    return;
+                }
+                
+                const baseUrl = mainConverterApiUrl.endsWith('?') ? mainConverterApiUrl : mainConverterApiUrl + '?';
+                const params = new URLSearchParams();
+                params.append('url', subUrlInput);
+                params.append('target', target);
+                if (configInput) {
+                    params.append('config', configInput);
+                }
+                for (const key in options) {
+                    if (options.hasOwnProperty(key)) {
+                         params.append(key, options[key]);
+                    }
+                }
+                
+                const finalUrl = baseUrl + params.toString();
+                document.getElementById('output-url').value = finalUrl;
             }
-
-            params.append('emoji', document.getElementById('emoji').checked);
-            params.append('udp', document.getElementById('udp').checked);
-            params.append('tfo', document.getElementById('tfo').checked);
-            params.append('expand', document.getElementById('expand').checked);
-            params.append('scv', document.getElementById('scv').checked);
-            params.append('fdn', document.getElementById('fdn').checked);
-            params.append('new_name', document.getElementById('new_name').checked);
-            params.append('insert', document.getElementById('insert').checked);
-            params.append('xudp', document.getElementById('xudp').checked);
-            params.append('tls13', document.getElementById('tls13').checked);
-            params.append('sort', document.getElementById('sort').checked);
-            params.append('append_type', document.getElementById('append_type').checked);
-            params.append('f_un', document.getElementById('f_un').checked);
-            params.append('list', 'false');
-
-            const finalUrl = baseUrl + params.toString();
-            document.getElementById('output-url').value = finalUrl;
         });
 
         document.getElementById('copy-btn').addEventListener('click', function() {
             const outputUrlInput = document.getElementById('output-url');
-            if (outputUrlInput.value) {
+            if (outputUrlInput.value && outputUrlInput.value !== 'در حال پردازش...') {
                 outputUrlInput.select();
-                outputUrlInput.setSelectionRange(0, 99999);
+                outputUrlInput.setSelectionRange(0, 99999); // For mobile devices
                 try {
                      navigator.clipboard.writeText(outputUrlInput.value).then(function() {
                          alert('لینک با موفقیت کپی شد!');
                      }, function(err) {
-                         alert('خطا در کپی کردن لینک: ' + err);
+                        try {
+                            document.execCommand('copy');
+                            alert('لینک با موفقیت کپی شد! (Fallback)');
+                        } catch (e) {
+                            alert('خطا در کپی کردن لینک. لطفاً دستی کپی کنید.');
+                        }
                      });
                 } catch (err) {
                     try {
@@ -401,11 +298,13 @@
                          alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
                     }
                 }
-            } else {
+            } else if (outputUrlInput.value === 'در حال پردازش...') {
+                alert('لطفاً تا پایان تولید لینک صبر کنید.');
+            }
+            else {
                 alert('هنوز لینکی تولید نشده است.');
             }
         });
     </script>
-
 </body>
 </html>
