@@ -160,7 +160,7 @@
                 <label> افزودن نوع نود<input type="checkbox" id="append_type"></label>
                 <label> فیلتر نودهای ناسازگار<input type="checkbox" id="f_un"></label>
                 <label title="در صورت فعال بودن، لینک اشتراک توسط سرور واسط دانلود، به Base64 تبدیل و سپس به API مبدل ارسال می‌شود. این گزینه ممکن است برای برخی لینک‌های خاص مفید باشد.">
-                    فعال‌سازی پردازش پیشرفته (Base64 با سرور واسط)
+                    تبدیل به بیس ۶۴
                     <input type="checkbox" id="use_custom_base64_worker">
                 </label>
             </div>
@@ -222,7 +222,7 @@
             document.getElementById('output-url').value = 'در حال پردازش...';
 
             if (useCustomWorker) {
-                const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev'; // <-- آدرس Worker شما
+                const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev'; // آدرس Worker شما
 
                 try {
                     const response = await fetch(workerUrl, {
@@ -231,7 +231,7 @@
                         body: JSON.stringify({ 
                             subUrl: subUrlInput, 
                             target: target, 
-                            config: configInput || null, // ارسال null اگر خالی است
+                            config: configInput || null,
                             options: options 
                         })
                     });
@@ -278,7 +278,7 @@
             const outputUrlInput = document.getElementById('output-url');
             if (outputUrlInput.value && outputUrlInput.value !== 'در حال پردازش...') {
                 outputUrlInput.select();
-                outputUrlInput.setSelectionRange(0, 99999); // For mobile devices
+                outputUrlInput.setSelectionRange(0, 99999);
                 try {
                      navigator.clipboard.writeText(outputUrlInput.value).then(function() {
                          alert('لینک با موفقیت کپی شد!');
