@@ -10,9 +10,14 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a0a0ff' width='32px' height='32px'%3E%3Cpath d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z'/%3E%3C/svg%3E" type="image/svg+xml">
 
     <style>
-        :root {
-            --bg-color: #121212; /* کمی تیره‌تر برای کنتراست بهتر با پس‌زمینه روشن‌تر */
-            --card-bg-color: #1e1e1e; /* رنگ پایه برای کانتینر قبل از تصویر */
+        :root { /* پوسته تیره به عنوان پیش‌فرض */
+            --bg-color: #121212;
+            --body-bg-image-url: url('https://raw.githubusercontent.com/10ium/free-config/refs/heads/main/Archive/Collector/clash/Woman%20Life%20Freedom.webp');
+            --body-bg-filter: grayscale(0.3) sepia(0.15) contrast(1.05) brightness(0.9); /* فیلتر حماسی تیره */
+            --container-bg-image-url: url('https://raw.githubusercontent.com/10ium/free-config/refs/heads/main/Archive/Collector/clash/Woman%20Life%20Freedom.png');
+            --container-overlay-color-start: rgba(20, 20, 20, 0.85);
+            --container-overlay-color-end: rgba(15, 15, 15, 0.95);
+            --card-bg-color-rgb: 28, 28, 28; /* برای rgba کانتینر */
             --text-color: #e0e0e0;
             --label-color: #b3b3b3;
             --input-bg-color: #3a3a3a;
@@ -21,42 +26,86 @@
             --button-text-color: #ffffff;
             --button-hover-bg: #0056b3;
             --primary-color: #a0a0ff;
+            --output-field-bg: #111;
+            --footer-link-bg: #333;
+            --footer-link-hover-bg: #4f4f4f;
+            --theme-toggle-bg: var(--input-bg-color);
+            --theme-toggle-text: var(--text-color);
+            --theme-toggle-border: var(--input-border-color);
         }
+
+        body.light-theme {
+            --bg-color: #f0f2f5;
+            --body-bg-filter: grayscale(0.1) sepia(0.05) contrast(1.0) brightness(1.0); /* فیلتر ملایم‌تر برای روز */
+            --container-overlay-color-start: rgba(255, 255, 255, 0.80);
+            --container-overlay-color-end: rgba(245, 245, 245, 0.90);
+            --card-bg-color-rgb: 250, 250, 250;
+            --text-color: #212529;
+            --label-color: #495057;
+            --input-bg-color: #ffffff;
+            --input-border-color: #ced4da;
+            --button-bg-color: #0069d9;
+            --button-text-color: #ffffff;
+            --button-hover-bg: #0056b3;
+            --primary-color: #5050dd;
+            --output-field-bg: #e9ecef;
+            --footer-link-bg: #f1f1f1;
+            --footer-link-hover-bg: #e1e1e1;
+            --theme-toggle-bg: #fff;
+            --theme-toggle-text: #333;
+            --theme-toggle-border: #ccc;
+        }
+
         body {
-            background-image: url('https://raw.githubusercontent.com/10ium/free-config/refs/heads/main/Archive/Collector/clash/Woman%20Life%20Freedom.webp');
-            background-size: cover; 
-            background-position: center center; 
-            background-repeat: no-repeat; 
-            background-attachment: fixed; 
-            background-color: var(--bg-color); /* رنگ پس‌زمینه اگر تصویر لود نشد */
-            
+            background-color: var(--bg-color); /* رنگ پایه اگر تصویر لود نشد */
             color: var(--text-color); 
             font-family: 'Vazirmatn', sans-serif;
-            margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; /* تغییر به align-items: center برای وسط‌چین عمودی بهتر */
+            margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center;
             min-height: 100vh; font-size: 16px; line-height: 1.6;
-            box-sizing: border-box; /* اضافه شده برای محاسبه بهتر padding */
+            box-sizing: border-box;
+            position: relative; /* برای لایه‌بندی صحیح ::before */
+            z-index: 0; /* برای لایه‌بندی صحیح ::before */
+            transition: background-color 0.3s ease, color 0.3s ease; /* انیمیشن تغییر تم */
         }
+
+        body::before { /* برای اعمال فیلتر فقط روی تصویر پس‌زمینه اصلی */
+            content: "";
+            position: fixed; 
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: var(--body-bg-image-url);
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            filter: var(--body-bg-filter);
+            z-index: -1; /* پشت همه چیز */
+            transition: filter 0.3s ease; /* انیمیشن تغییر فیلتر */
+        }
+
         .container {
             background-image: 
-                linear-gradient(rgba(26, 26, 26, 0.80), rgba(26, 26, 26, 0.92)), /* لایه تیره کننده برای تصویر کانتینر */
-                url('https://raw.githubusercontent.com/10ium/free-config/refs/heads/main/Archive/Collector/clash/Woman%20Life%20Freedom.png');
+                linear-gradient(var(--container-overlay-color-start), var(--container-overlay-color-end)), 
+                var(--container-bg-image-url);
+            background-color: rgba(var(--card-bg-color-rgb), 0.97); /* رنگ پایه کانتینر با کمی شفافیت */
             background-size: cover; 
             background-position: center center;
             background-repeat: no-repeat; 
             
             padding: 25px 30px; 
-            border-radius: 12px; /* کمی گردتر */
-            border: 1px solid rgba(128, 128, 128, 0.25); 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.75); /* سایه قوی‌تر */
+            border-radius: 12px; 
+            border: 1px solid var(--input-border-color); 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.55); 
             width: 100%; 
             max-width: 700px; 
             box-sizing: border-box;
             padding-bottom: 30px; 
             position: relative; 
             z-index: 1; 
-            margin-top: 20px; /* فاصله از بالا اگر محتوا زیاد است */
-            margin-bottom: 20px; /* فاصله از پایین */
+            margin-top: 20px; 
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
+        /* ... بقیه استایل‌های CSS شما که از متغیرها استفاده می‌کنند ... */
         h1 { color: var(--text-color); text-align: center; margin-bottom: 30px; font-weight: 700; }
         .form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--label-color); font-weight: 700; }
@@ -65,6 +114,7 @@
             background-color: var(--input-bg-color); color: var(--text-color); border-radius: 5px;
             font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; font-size: 0.95em;
             direction: ltr; text-align: left;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         .form-group textarea {
             direction: rtl; text-align: right; min-height: 80px; resize: vertical;
@@ -84,49 +134,82 @@
             display: flex; align-items: center; background-color: var(--input-bg-color);
             padding: 8px 12px; border-radius: 5px; cursor: pointer; transition: background-color 0.2s;
             justify-content: flex-end; font-size: 0.9em; 
+            color: var(--text-color); /* اضافه شد برای تغییر رنگ متن لیبل چک‌باکس */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        .checkbox-group label:hover { background-color: #4a4a4a; }
+        .checkbox-group label:hover { background-color: var(--button-hover-bg); color: var(--button-text-color); }
         .checkbox-group input[type="checkbox"] { margin-left: 0; margin-right: 8px; transform: scale(1.1); }
         .button-group { text-align: center; margin-top: 30px; }
         button {
             background-color: var(--button-bg-color); color: var(--button-text-color); border: none;
             padding: 12px 25px; border-radius: 5px; font-family: 'Vazirmatn', sans-serif;
-            font-size: 1.1em; cursor: pointer; transition: background-color 0.3s ease; margin: 5px;
+            font-size: 1.1em; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease; margin: 5px;
         }
         button:hover { background-color: var(--button-hover-bg); }
-        button.copy-btn { background-color: #28a745; }
-        button.copy-btn:hover { background-color: #218838; }
+        button.copy-btn, button.download-btn { background-color: #28a745; } /* یکی کردن رنگ دکمه‌های کپی و دانلود */
+        button.copy-btn:hover, button.download-btn:hover { background-color: #218838; }
+        button.download-btn { background-color: #17a2b8; } /* رنگ متفاوت برای دانلود */
+        button.download-btn:hover { background-color: #138496; }
+
+
         .output-group { margin-top: 30px; }
         .output-group input {
-            direction: ltr; text-align: left; background-color: #111; border-color: var(--primary-color);
+            direction: ltr; text-align: left; background-color: var(--output-field-bg); border-color: var(--primary-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         .footer {
             margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--input-border-color);
             text-align: center; display: flex; justify-content: center; align-items: center;
             flex-wrap: wrap; gap: 15px; 
+            transition: border-color 0.3s ease;
         }
         .footer a {
             display: inline-flex; align-items: center; color: var(--label-color); text-decoration: none;
-            font-size: 0.9em; transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            padding: 8px 15px; background-color: #333; border-radius: 25px; 
+            font-size: 0.9em; transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            padding: 8px 15px; background-color: var(--footer-link-bg); border-radius: 25px; 
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         .footer a:hover {
-            color: var(--text-color); background-color: #4f4f4f; transform: translateY(-3px); 
+            color: var(--text-color); background-color: var(--footer-link-hover-bg); transform: translateY(-3px); 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         .footer img { width: 18px; height: 18px; margin-left: 10px; vertical-align: middle; border-radius: 4px; }
         .footer span { font-weight: 400; }
+
+        #theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px; /* برای RTL در سمت چپ قرار می‌گیرد */
+            z-index: 1001;
+            padding: 8px 12px;
+            background: var(--theme-toggle-bg);
+            color: var(--theme-toggle-text);
+            border: 1px solid var(--theme-toggle-border);
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        #theme-toggle:hover {
+            background: var(--button-hover-bg);
+            color: var(--button-text-color);
+        }
+
          @media (max-width: 600px) {
-            body { align-items: flex-start; /* برای موبایل ممکن است وسط‌چین عمودی خوب نباشد اگر محتوا زیاد است */ }
-            .container { margin-top: 10px; margin-bottom: 10px; padding: 20px 15px; }
+            body { align-items: flex-start; }
+            .container { margin-top: 60px; margin-bottom: 10px; padding: 20px 15px; } /* فاصله برای دکمه تم */
             .checkbox-group { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
             .checkbox-group label {font-size: 0.85em; padding: 6px 10px;}
             h1 { font-size: 1.5em; margin-bottom: 20px;}
+            #theme-toggle { top: 10px; left: 10px; padding: 6px 10px; font-size: 0.8em; }
          }
     </style>
 </head>
 <body>
+    <button id="theme-toggle">تغییر تم 🌞/🌜</button>
+
     <div class="container">
         <h1>ابزار تبدیل اشتراک</h1>
 
@@ -199,10 +282,7 @@
 
         <div class="output-group form-group">
             <label for="output-url">لینک تولید شده:</label>
-            <div style="display: flex;">
-                 <input type="text" id="output-url" readonly placeholder="لینک نهایی در اینجا نمایش داده می‌شود...">
-                 <button id="copy-btn" class="copy-btn" style="width: 100px; margin-right: 10px;">کپی</button>
-            </div>
+            <div style="display: flex; align-items: center;"> <input type="text" id="output-url" readonly placeholder="لینک نهایی در اینجا نمایش داده می‌شود..." style="flex-grow: 1;"> <button id="copy-btn" class="copy-btn" style="width: auto; padding: 10px 15px; margin-right: 10px; flex-shrink: 0;">کپی</button> <button id="download-btn" class="download-btn" style="width: auto; padding: 10px 15px; flex-shrink: 0;">دانلود فایل</button> </div>
         </div>
 
         <div class="footer">
@@ -226,6 +306,7 @@
     </div>
 
     <script>
+        // --- تنظیمات Rate Limiting سمت کاربر ---
         const MAX_CLICKS_CLIENT = 30; 
         const TIME_WINDOW_CLIENT_MS = 60 * 60 * 1000; 
         const TIMEOUT_DURATION_CLIENT_MS = 2 * 60 * 60 * 1000; 
@@ -233,27 +314,54 @@
         function getRateLimitData() {
             const data = localStorage.getItem('clientRateLimit');
             if (data) {
-                try {
-                    return JSON.parse(data);
-                } catch (e) {
-                    console.error("Error parsing rate limit data from localStorage:", e);
+                try { return JSON.parse(data); } 
+                catch (e) { 
+                    console.error("Error parsing rate limit data:", e); 
                     localStorage.removeItem('clientRateLimit'); 
-                    return { clicks: 0, windowStart: 0, blockedUntil: 0 };
+                    return { clicks: 0, windowStart: 0, blockedUntil: 0 }; 
                 }
             }
             return { clicks: 0, windowStart: 0, blockedUntil: 0 };
         }
 
         function setRateLimitData(data) {
-            try {
-                localStorage.setItem('clientRateLimit', JSON.stringify(data));
-            } catch (e) {
-                console.error("Error setting rate limit data to localStorage:", e);
-            }
+            try { localStorage.setItem('clientRateLimit', JSON.stringify(data)); } 
+            catch (e) { console.error("Error setting rate limit data:", e); }
         }
 
+        // --- مدیریت تم ---
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark'; // پیش‌فرض تیره
+
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+                themeToggleButton.textContent = 'تغییر به تم تیره 🌜';
+            } else {
+                document.body.classList.remove('light-theme');
+                themeToggleButton.textContent = 'تغییر به تم روشن 🌞';
+            }
+        }
+        applyTheme(currentTheme); // اعمال تم ذخیره شده در اولین بارگذاری
+
+        if (themeToggleButton) {
+            themeToggleButton.addEventListener('click', () => {
+                document.body.classList.toggle('light-theme');
+                let newTheme = 'dark';
+                if (document.body.classList.contains('light-theme')) {
+                    newTheme = 'light';
+                }
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme); // برای به‌روزرسانی متن دکمه
+            });
+        }
+
+
+        // --- منطق اصلی دکمه‌ها ---
         const generateBtn = document.getElementById('generate-btn');
         const outputUrlField = document.getElementById('output-url');
+        const copyBtn = document.getElementById('copy-btn');
+        const downloadBtn = document.getElementById('download-btn');
 
         if (generateBtn) {
             generateBtn.addEventListener('click', async function() {
@@ -264,11 +372,12 @@
                     const totalRemainingSeconds = Math.ceil((rateData.blockedUntil - currentTime) / 1000);
                     const remainingHours = Math.floor(totalRemainingSeconds / 3600);
                     const remainingMinutes = Math.ceil((totalRemainingSeconds % 3600) / 60);
-                    
                     let timeLeftMessage = "";
                     if (remainingHours > 0) {
                         timeLeftMessage = `حدود ${remainingHours} ساعت`;
-                        if (remainingMinutes > 0) {
+                        if (remainingMinutes > 0 && remainingHours < 2 && totalRemainingSeconds < 7200) { // اگر کمتر از ۲ ساعت بود و دقیقه هم داشت
+                           timeLeftMessage = `حدود ${Math.floor(totalRemainingSeconds / 60)} دقیقه`;
+                        } else if (remainingMinutes > 0) {
                            timeLeftMessage += ` و ${remainingMinutes} دقیقه`;
                         }
                     } else if (remainingMinutes > 0) {
@@ -281,40 +390,30 @@
                 }
 
                 if (currentTime - rateData.windowStart > TIME_WINDOW_CLIENT_MS || (rateData.blockedUntil && currentTime > rateData.blockedUntil)) {
-                    rateData.clicks = 0;
-                    rateData.windowStart = currentTime;
-                    rateData.blockedUntil = 0; 
+                    rateData.clicks = 0; rateData.windowStart = currentTime; rateData.blockedUntil = 0; 
                 }
-
                 rateData.clicks++;
-                console.log(`Client clicks: ${rateData.clicks} within this hour, windowStart: ${new Date(rateData.windowStart).toLocaleTimeString()}`);
-
+                console.log(`Client clicks: ${rateData.clicks} in window. Window started: ${new Date(rateData.windowStart).toLocaleTimeString()}`);
                 if (rateData.clicks > MAX_CLICKS_CLIENT) {
                     alert(`شما بیش از ${MAX_CLICKS_CLIENT} بار در یک ساعت درخواست داده‌اید. لطفاً حدود ۲ ساعت دیگر دوباره امتحان کنید.`);
                     rateData.blockedUntil = currentTime + TIMEOUT_DURATION_CLIENT_MS;
                     setRateLimitData(rateData);
-                    if(outputUrlField) outputUrlField.value = 'محدودیت استفاده اعمال شد.'; // پیام در فیلد خروجی
+                    if(outputUrlField) outputUrlField.value = 'محدودیت استفاده اعمال شد.';
                     return; 
                 }
-
                 setRateLimitData(rateData);
 
                 const useCustomWorker = document.getElementById('use_custom_base64_worker').checked;
                 const subUrlInput = document.getElementById('sub-url').value.trim();
                 const mainConverterApiUrl = document.getElementById('api-url').value.trim(); 
 
-                if (!subUrlInput) {
-                    alert('لطفاً حداقل یک لینک اشتراک وارد کنید.');
-                    return;
-                }
+                if (!subUrlInput) { alert('لطفاً حداقل یک لینک اشتراک وارد کنید.'); return; }
 
                 const target = document.getElementById('target').value;
                 const configInput = document.getElementById('config').value.trim();
                 const options = {};
                 document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => {
-                    if (cb.id !== 'use_custom_base64_worker') {
-                        options[cb.id] = cb.checked;
-                    }
+                    if (cb.id !== 'use_custom_base64_worker') { options[cb.id] = cb.checked; }
                 });
                 options['list'] = 'false'; 
 
@@ -322,96 +421,112 @@
 
                 if (useCustomWorker) {
                     const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev'; 
-
                     try {
                         const response = await fetch(workerUrl, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ 
-                                subUrl: subUrlInput, 
-                                target: target, 
-                                config: configInput || null,
-                                options: options 
-                            })
+                            body: JSON.stringify({ subUrl: subUrlInput, target: target, config: configInput || null, options: options })
                         });
-
                         const responseData = await response.json();
-
-                        if (!response.ok) {
-                            throw new Error(responseData.error || `خطا از سرور واسط: ${response.status} ${response.statusText}`);
-                        }
-                        
+                        if (!response.ok) { throw new Error(responseData.error || `خطا از سرور واسط: ${response.status} ${response.statusText}`); }
                         if(outputUrlField) outputUrlField.value = responseData.finalUrl;
-
                     } catch (error) {
                         alert(`خطا در ارتباط با سرور واسط: ${error.message}`);
                         if(outputUrlField) outputUrlField.value = '';
                     }
-
                 } else {
-                    if (!mainConverterApiUrl) {
-                        alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.');
-                        if(outputUrlField) outputUrlField.value = '';
-                        return;
-                    }
-                    
+                    if (!mainConverterApiUrl) { alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.'); if(outputUrlField) outputUrlField.value = ''; return; }
                     const baseUrl = mainConverterApiUrl.endsWith('?') ? mainConverterApiUrl : mainConverterApiUrl + '?';
                     const params = new URLSearchParams();
                     params.append('url', subUrlInput);
                     params.append('target', target);
-                    if (configInput) {
-                        params.append('config', configInput);
-                    }
-                    for (const key in options) {
-                        if (options.hasOwnProperty(key)) {
-                             params.append(key, options[key]);
-                        }
-                    }
-                    
+                    if (configInput) { params.append('config', configInput); }
+                    for (const key in options) { if (options.hasOwnProperty(key)) { params.append(key, options[key]); } }
                     const finalUrl = baseUrl + params.toString();
                     if(outputUrlField) outputUrlField.value = finalUrl;
                 }
             });
-        } else {
-            console.error("Generate button ('generate-btn') not found!");
-        }
+        } else { console.error("Generate button ('generate-btn') not found!"); }
 
-        const copyBtn = document.getElementById('copy-btn');
         if (copyBtn) {
             copyBtn.addEventListener('click', function() {
-                const currentOutputUrlField = document.getElementById('output-url'); // اطمینان از دریافت مجدد المنت
+                const currentOutputUrlField = document.getElementById('output-url');
                 if (currentOutputUrlField && currentOutputUrlField.value && currentOutputUrlField.value !== 'در حال پردازش...' && currentOutputUrlField.value !== 'محدودیت استفاده اعمال شد.') {
                     currentOutputUrlField.select();
                     currentOutputUrlField.setSelectionRange(0, 99999);
                     try {
                          navigator.clipboard.writeText(currentOutputUrlField.value).then(function() {
                              alert('لینک با موفقیت کپی شد!');
-                         }, function(err) {
-                            try {
-                                document.execCommand('copy');
-                                alert('لینک با موفقیت کپی شد! (Fallback)');
-                            } catch (e) {
-                                alert('خطا در کپی کردن لینک. لطفاً دستی کپی کنید.');
-                            }
+                         }, function(errCb) { // Renamed err to errCb
+                            try { document.execCommand('copy'); alert('لینک با موفقیت کپی شد! (Fallback)'); } 
+                            catch (e) { alert('خطا در کپی کردن لینک. لطفاً دستی کپی کنید.'); }
                          });
-                    } catch (err) {
-                        try {
-                            document.execCommand('copy');
-                            alert('لینک با موفقیت کپی شد! (Fallback)');
-                        } catch (e) {
-                             alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.');
-                        }
+                    } catch (err) { // Main try...catch error
+                        try { document.execCommand('copy'); alert('لینک با موفقیت کپی شد! (Fallback)'); } 
+                        catch (e) { alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.'); }
                     }
                 } else if (currentOutputUrlField && (currentOutputUrlField.value === 'در حال پردازش...' || currentOutputUrlField.value === 'محدودیت استفاده اعمال شد.')) {
                     alert('لطفاً تا پایان عملیات یا رفع محدودیت صبر کنید.');
+                } else { alert('هنوز لینکی تولید نشده است.'); }
+            });
+        } else { console.error("Copy button ('copy-btn') not found!"); }
+
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', async function() {
+                const currentOutputUrlField = document.getElementById('output-url');
+                const outputUrl = currentOutputUrlField ? currentOutputUrlField.value : '';
+
+                if (!outputUrl || outputUrl === 'در حال پردازش...' || outputUrl === 'محدودیت استفاده اعمال شد.') {
+                    alert('ابتدا یک لینک معتبر تولید کنید تا بتوانید محتوای آن را دانلود کنید.');
+                    return;
                 }
-                else {
-                    alert('هنوز لینکی تولید نشده است.');
+
+                let filename = "subscription.txt"; // نام پیش‌فرض
+                const targetSelect = document.getElementById('target');
+                if (targetSelect) {
+                    const targetValue = targetSelect.value;
+                    if (targetValue.includes('clash')) filename = "clash_config.yaml";
+                    else if (targetValue.includes('v2ray')) filename = "v2ray_config.txt";
+                    // می‌توانید موارد بیشتری برای سایر target ها اضافه کنید
+                }
+                
+                // پیام انتظار برای دانلود
+                const originalButtonText = downloadBtn.textContent;
+                downloadBtn.textContent = 'در حال دانلود...';
+                downloadBtn.disabled = true;
+
+                try {
+                    console.log(`Attempting to download content from: ${outputUrl}`);
+                    // نکته: اگر outputUrl به دامنه دیگری (مثل url.v1.mk مستقیم) باشد و آن دامنه CORS را برای سایت شما مجاز نکرده باشد، این fetch با خطای CORS مواجه خواهد شد.
+                    // این قابلیت وقتی که از Worker خودتان استفاده می‌کنید (که CORS را برای سایت شما مجاز کرده) بهتر کار می‌کند.
+                    const response = await fetch(outputUrl);
+                    if (!response.ok) {
+                        throw new Error(`خطا در دریافت محتوای لینک: ${response.status} ${response.statusText}`);
+                    }
+                    const content = await response.text();
+                    
+                    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href); 
+                    alert(`دانلود فایل '${filename}' شروع شد.`);
+
+                } catch (error) {
+                    console.error('Download error:', error);
+                    alert(`خطا در دانلود فایل: ${error.message}\n\nاین مشکل ممکن است به دلیل محدودیت‌های CORS از سمت سرور لینک تولید شده باشد. اگر از گزینه "تبدیل به بیس ۶۴" استفاده نکرده‌اید، این قابلیت ممکن است کار نکند. در این صورت، لینک را کپی کرده و مستقیماً در مرورگر باز کنید و محتوا را ذخیره نمایید.`);
+                } finally {
+                    downloadBtn.textContent = originalButtonText;
+                    downloadBtn.disabled = false;
                 }
             });
         } else {
-             console.error("Copy button ('copy-btn') not found!");
+            console.error("Download button ('download-btn') not found!");
         }
+
     </script>
 </body>
 </html>
