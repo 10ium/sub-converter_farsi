@@ -32,6 +32,10 @@
             --theme-toggle-bg: var(--input-bg-color);
             --theme-toggle-text: var(--text-color);
             --theme-toggle-border: var(--input-border-color);
+            --message-box-bg-success: #28a745;
+            --message-box-bg-error: #dc3545;
+            --message-box-bg-info: #007bff;
+            --message-box-text: #fff;
         }
 
         body.light-theme {
@@ -54,11 +58,15 @@
             --theme-toggle-bg: #fff;
             --theme-toggle-text: #333;
             --theme-toggle-border: #ccc;
+            --message-box-bg-success: #28a745;
+            --message-box-bg-error: #dc3545;
+            --message-box-bg-info: #007bff;
+            --message-box-text: #fff;
         }
 
         body {
             background-color: var(--bg-color); /* رنگ پایه اگر تصویر لود نشد */
-            color: var(--text-color); 
+            color: var(--text-color);
             font-family: 'Vazirmatn', sans-serif;
             margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center;
             min-height: 100vh; font-size: 16px; line-height: 1.6;
@@ -70,7 +78,7 @@
 
         body::before { /* برای اعمال فیلتر فقط روی تصویر پس‌زمینه اصلی */
             content: "";
-            position: fixed; 
+            position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background-image: var(--body-bg-image-url);
@@ -83,29 +91,28 @@
         }
 
         .container {
-            background-image: 
-                linear-gradient(var(--container-overlay-color-start), var(--container-overlay-color-end)), 
+            background-image:
+                linear-gradient(var(--container-overlay-color-start), var(--container-overlay-color-end)),
                 var(--container-bg-image-url);
             background-color: rgba(var(--card-bg-color-rgb), 0.97); /* رنگ پایه کانتینر با کمی شفافیت */
-            background-size: cover; 
+            background-size: cover;
             background-position: center center;
-            background-repeat: no-repeat; 
-            
-            padding: 25px 30px; 
-            border-radius: 12px; 
-            border: 1px solid var(--input-border-color); 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.55); 
-            width: 100%; 
-            max-width: 700px; 
+            background-repeat: no-repeat;
+
+            padding: 25px 30px;
+            border-radius: 12px;
+            border: 1px solid var(--input-border-color);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.55);
+            width: 100%;
+            max-width: 700px;
             box-sizing: border-box;
-            padding-bottom: 30px; 
-            position: relative; 
-            z-index: 1; 
-            margin-top: 20px; 
+            padding-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            margin-top: 20px;
             margin-bottom: 20px;
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
-        /* ... بقیه استایل‌های CSS شما که از متغیرها استفاده می‌کنند ... */
         h1 { color: var(--text-color); text-align: center; margin-bottom: 30px; font-weight: 700; }
         .form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--label-color); font-weight: 700; }
@@ -120,20 +127,20 @@
             direction: rtl; text-align: right; min-height: 80px; resize: vertical;
         }
         .form-group input::placeholder, .form-group textarea::placeholder {
-             color: #888; text-align: right; direction: rtl; 
+             color: #888; text-align: right; direction: rtl;
         }
         .form-group input[type="text"], .form-group select { direction: ltr; text-align: left; }
         .form-group select option {
             font-family: 'Vazirmatn', sans-serif; background-color: var(--input-bg-color); color: var(--text-color);
         }
         .checkbox-group {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 12px; margin-top: 10px; text-align: right;
         }
         .checkbox-group label {
             display: flex; align-items: center; background-color: var(--input-bg-color);
             padding: 8px 12px; border-radius: 5px; cursor: pointer; transition: background-color 0.2s;
-            justify-content: flex-end; font-size: 0.9em; 
+            justify-content: flex-end; font-size: 0.9em;
             color: var(--text-color); /* اضافه شد برای تغییر رنگ متن لیبل چک‌باکس */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
@@ -161,21 +168,40 @@
         .footer {
             margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--input-border-color);
             text-align: center; display: flex; justify-content: center; align-items: center;
-            flex-wrap: wrap; gap: 15px; 
+            flex-wrap: wrap; gap: 15px;
             transition: border-color 0.3s ease;
         }
         .footer a {
             display: inline-flex; align-items: center; color: var(--label-color); text-decoration: none;
             font-size: 0.9em; transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            padding: 8px 15px; background-color: var(--footer-link-bg); border-radius: 25px; 
+            padding: 8px 15px; background-color: var(--footer-link-bg); border-radius: 25px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         .footer a:hover {
-            color: var(--text-color); background-color: var(--footer-link-hover-bg); transform: translateY(-3px); 
+            color: var(--text-color); background-color: var(--footer-link-hover-bg); transform: translateY(-3px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         .footer img { width: 18px; height: 18px; margin-left: 10px; vertical-align: middle; border-radius: 4px; }
         .footer span { font-weight: 400; }
+
+        /* Styling for the new "Free Config" link */
+        .footer a.free-config-link {
+            background-color: #6a0dad; /* A distinct, appealing color */
+            color: #ffffff;
+            font-weight: 700;
+            animation: pulse 2s infinite; /* Add a subtle pulse animation */
+        }
+        .footer a.free-config-link:hover {
+            background-color: #8a2be2; /* Lighter shade on hover */
+            transform: scale(1.05) translateY(-3px); /* Slightly larger and lifted */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        /* Pulse animation keyframes */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
+            50% { transform: scale(1.02); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+            100% { transform: scale(1); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
+        }
 
         #theme-toggle {
             position: fixed;
@@ -197,25 +223,137 @@
             color: var(--button-text-color);
         }
 
-         @media (max-width: 600px) {
+        /* Custom Message Box Styles */
+        #message-box {
+            position: fixed;
+            top: 0; /* Start from the top */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            padding: 15px 20px;
+            border-radius: 0 0 8px 8px; /* Rounded corners only at the bottom */
+            text-align: center;
+            color: var(--message-box-text);
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, top 0.4s ease-in-out;
+            direction: rtl; /* Ensure message box text is RTL */
+        }
+
+        #message-box.show {
+            opacity: 1;
+            visibility: visible;
+            top: 20px; /* Slide down to 20px from top */
+        }
+
+        #message-box.success { background-color: var(--message-box-bg-success); }
+        #message-box.error { background-color: var(--message-box-bg-error); }
+        #message-box.info { background-color: var(--message-box-bg-info); }
+
+
+        @media (max-width: 600px) {
             body { align-items: flex-start; }
             .container { margin-top: 60px; margin-bottom: 10px; padding: 20px 15px; } /* فاصله برای دکمه تم */
             .checkbox-group { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
             .checkbox-group label {font-size: 0.85em; padding: 6px 10px;}
             h1 { font-size: 1.5em; margin-bottom: 20px;}
             #theme-toggle { top: 10px; left: 10px; padding: 6px 10px; font-size: 0.8em; }
-         }
+            #message-box {
+                width: 95%;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Styles for custom input toggle */
+        .input-toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between select/input and toggle */
+        }
+
+        .input-toggle-container select,
+        .input-toggle-container input[type="text"] {
+            flex-grow: 1; /* Allow them to take available space */
+        }
+
+        .input-toggle-container .custom-toggle-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            white-space: nowrap; /* Prevent text from wrapping */
+            background-color: var(--input-bg-color);
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid var(--input-border-color);
+            color: var(--text-color);
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .input-toggle-container .custom-toggle-label:hover {
+            background-color: var(--button-hover-bg);
+            color: var(--button-text-color);
+        }
+
+        .input-toggle-container .custom-toggle-label input[type="checkbox"] {
+            margin-left: 0; /* Override default checkbox margin */
+            margin-right: 8px; /* Space between checkbox and text */
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Styles for Advanced Features Section */
+        #advanced-features-section {
+            border: 1px solid var(--input-border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: rgba(var(--card-bg-color-rgb), 0.7); /* Slightly lighter background */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        #advanced-features-section.hidden-section {
+            display: none;
+        }
+
+        #toggle-advanced-btn {
+            background-color: var(--input-bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--input-border-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1em;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px; /* Space between button and section */
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        #toggle-advanced-btn:hover {
+            background-color: var(--button-hover-bg);
+            color: var(--button-text-color);
+        }
+
     </style>
 </head>
 <body>
     <button id="theme-toggle">تغییر تم 🌞/🌜</button>
+
+    <div id="message-box"></div>
 
     <div class="container">
         <h1>ابزار تبدیل اشتراک</h1>
 
         <div class="form-group">
             <label for="sub-url">لینک های اشتراک:</label>
-            <textarea id="sub-url" rows="4" 
+            <textarea id="sub-url" rows="4"
                       placeholder="لینک های اشتراک خود را وارد کنید.&#10;برای چند لینک، هر کدام را در یک خط جدید یا با | جدا کنید.&#10;اگر از لینک اشتراک معمولی استفاده می‌کنید، تیک «تبدیل به بیس ۶۴» را فعال کنید."></textarea>
         </div>
 
@@ -244,13 +382,32 @@
         </div>
 
         <div class="form-group">
-            <label for="api-url">آدرس سرویس مبدل (API):</label>
-            <input type="text" id="api-url" value="https://url.v1.mk/sub" placeholder="آدرس API مبدل را وارد کنید">
+            <label>آدرس سرویس مبدل (API):</label>
+            <div class="input-toggle-container">
+                <select id="api-url-select" class="dynamic-input">
+                    </select>
+                <input type="text" id="api-url-custom" class="dynamic-input hidden" placeholder="آدرس API دلخواه خود را وارد کنید">
+                <label class="custom-toggle-label">
+                    <input type="checkbox" id="api-url-custom-toggle"> دلخواه
+                </label>
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="config">پیکربندی ریموت:</label>
-            <input type="text" id="config" value="https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/ACL4SSR/vpnclashfa.ini" placeholder="آدرس فایل پیکربندی (مانند ini یا rule-set)، یا خالی بگذارید">
+            <label>پیکربندی ریموت:</label>
+            <div class="input-toggle-container">
+                <select id="config-select" class="dynamic-input">
+                    </select>
+                <input type="text" id="config-custom" class="dynamic-input hidden" placeholder="آدرس پیکربندی دلخواه خود را وارد کنید">
+                <label class="custom-toggle-label">
+                    <input type="checkbox" id="config-custom-toggle"> دلخواه
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="output-filename">نام فایل خروجی:</label>
+            <input type="text" id="output-filename" placeholder="نام فایل خروجی (اختیاری)">
         </div>
 
         <div class="form-group">
@@ -273,6 +430,31 @@
                     تبدیل به بیس ۶۴
                     <input type="checkbox" id="use_custom_base64_worker">
                 </label>
+                <label>فقط خروجی اطلاعات نود<input type="checkbox" id="node-list-only"></label>
+            </div>
+        </div>
+
+        <button id="toggle-advanced-btn">قابلیت‌های پیشرفته: (نمایش/پنهان کردن)</button>
+
+        <div id="advanced-features-section" class="hidden-section">
+            <div class="form-group">
+                <label for="include-remarks">شامل نودها (regex):</label>
+                <textarea id="include-remarks" rows="2" placeholder="توضیحات یا کلمات کلیدی برای شامل کردن نودها (پشتیبانی از Regex)"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="exclude-remarks">حذف نودها (regex):</label>
+                <textarea id="exclude-remarks" rows="2" placeholder="توضیحات یا کلمات کلیدی برای حذف نودها (پشتیبانی از Regex)"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="node-rename">نام‌گذاری نود:</label>
+                <input type="text" id="node-rename" placeholder="مثال: `a@b``1@2`، کاراکتر | قابل استفاده است با \escape">
+            </div>
+
+            <div class="form-group">
+                <label for="remote-device-id">شناسه دستگاه ریموت:</label>
+                <input type="text" id="remote-device-id" placeholder="برای تنظیم شناسه دستگاه ریموت QuantumultX استفاده می‌شود">
             </div>
         </div>
 
@@ -296,36 +478,76 @@
             </a>
             <a href="https://www.tvtime.com/en/user/43351079/profile" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.google.com/s2/favicons?sz=32&domain=tvtime.com" alt="TV Time">
-                <span>تی‌وی تایم</span> 
+                <span>تی‌وی تایم</span>
             </a>
             <a href="https://linktr.ee/coldwater_10" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.google.com/s2/favicons?sz=32&domain=linktr.ee" alt="Linktree">
                 <span>لینک‌تری</span>
             </a>
+            <a href="https://github.com/10ium/free-sub-link" target="_blank" rel="noopener noreferrer" class="free-config-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 10px; vertical-align: middle;">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1.51-1V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l-.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V15z"></path>
+                </svg>
+                <span>کانفیگ رایگان</span>
+            </a>
         </div>
     </div>
 
     <script>
+        // --- Custom Message Box Function ---
+        const messageBox = document.getElementById('message-box');
+        let messageTimeout;
+
+        /**
+         * Displays a temporary message to the user.
+         * @param {string} message - The message to display.
+         * @param {'success'|'error'|'info'} type - The type of message (for styling).
+         * @param {number} duration - How long the message should be visible in milliseconds.
+         */
+        function showMessage(message, type = 'info', duration = 3000) {
+            if (!messageBox) {
+                console.error("Message box element not found!");
+                return;
+            }
+
+            // Clear any existing timeout to prevent messages from disappearing too soon
+            clearTimeout(messageTimeout);
+
+            // Set message content and type class
+            messageBox.textContent = message;
+            messageBox.className = ''; // Reset classes
+            messageBox.classList.add(type);
+            messageBox.classList.add('show'); // Make visible
+
+            // Hide message after duration
+            messageTimeout = setTimeout(() => {
+                messageBox.classList.remove('show');
+                // Optionally clear text after transition for accessibility
+                setTimeout(() => { messageBox.textContent = ''; }, 500); // Wait for transition to finish
+            }, duration);
+        }
+
         // --- تنظیمات Rate Limiting سمت کاربر ---
-        const MAX_CLICKS_CLIENT = 30; 
-        const TIME_WINDOW_CLIENT_MS = 60 * 60 * 1000; 
-        const TIMEOUT_DURATION_CLIENT_MS = 2 * 60 * 60 * 1000; 
+        const MAX_CLICKS_CLIENT = 30;
+        const TIME_WINDOW_CLIENT_MS = 60 * 60 * 1000;
+        const TIMEOUT_DURATION_CLIENT_MS = 2 * 60 * 60 * 1000;
 
         function getRateLimitData() {
             const data = localStorage.getItem('clientRateLimit');
             if (data) {
-                try { return JSON.parse(data); } 
-                catch (e) { 
-                    console.error("Error parsing rate limit data:", e); 
-                    localStorage.removeItem('clientRateLimit'); 
-                    return { clicks: 0, windowStart: 0, blockedUntil: 0 }; 
+                try { return JSON.parse(data); }
+                catch (e) {
+                    console.error("Error parsing rate limit data:", e);
+                    localStorage.removeItem('clientRateLimit');
+                    return { clicks: 0, windowStart: 0, blockedUntil: 0 };
                 }
             }
             return { clicks: 0, windowStart: 0, blockedUntil: 0 };
         }
 
         function setRateLimitData(data) {
-            try { localStorage.setItem('clientRateLimit', JSON.stringify(data)); } 
+            try { localStorage.setItem('clientRateLimit', JSON.stringify(data)); }
             catch (e) { console.error("Error setting rate limit data:", e); }
         }
 
@@ -356,12 +578,259 @@
             });
         }
 
+        // --- Data for API and Remote Config Options ---
+        const apiBackends = [
+            { label: "فیلترشکن فایرلایت【vless reality+hy1+hy2】", value: "https://url.v1.mk/sub" },
+            { label: "فیلترشکن فایرلایت پشتیبان【vless reality+hy1+hy2】", value: "https://sub.d1.mk/sub" },
+            { label: "つつ-چند منطقه‌ای ضد قطع شدن【توازن بار + بهینه‌سازی داخلی】", value: "https://api.tsutsu.one/sub" },
+            { label: "ارائه شده توسط nameless13", value: "https://www.nameless13.com/sub" },
+            { label: "ارائه شده توسط نویسنده subconverter", value: "https://sub.xeton.dev/sub" },
+            { label: "ارائه شده توسط نویسنده sub-web", value: "https://api.wcc.best/sub" },
+            { label: "ارائه شده توسط نویسنده sub & lhie1", value: "https://api.dler.io/sub" },
+        ];
+
+        const remoteConfigs = [
+            {
+                label: "عمومی",
+                options: [
+                    { label: "پیش‌فرض", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_NoAuto.ini" },
+                    { label: "پیش‌فرض (تست خودکار سرعت)", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_AdblockPlus.ini" },
+                    { label: "پیش‌فرض (مخصوص تلویزیون سونی)", value: "https://raw.githubusercontent.com/youshandefeiyang/webcdn/main/SONY.ini" },
+                    { label: "پیش‌فرض (همراه با AdGuard DNS برای Clash)", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/default_with_clash_adg.yml" },
+                    { label: "ACL_تمام گروه‌ها نسخه اصلاح شده Dream", value: "https://raw.githubusercontent.com/WC-Dream/ACL4SSR/WD/Clash/config/ACL4SSR_Online_Full_Dream.ini" },
+                    { label: "ACL_گروه‌های فشرده نسخه اصلاح شده Dream", value: "https://raw.githubusercontent.com/WC-Dream/ACL4SSR/WD/Clash/config/ACL4SSR_Mini_Dream.ini" },
+                    { label: "emby-TikTok-گروه‌بندی رسانه‌ای-نسخه تقویت شده ضد تبلیغات", value: "https://raw.githubusercontent.com/justdoiting/ClashRule/main/GeneralClashRule.ini" },
+                    { label: "گروه‌بندی عمومی رسانه‌ای", value: "https://raw.githubusercontent.com/cutethotw/ClashRule/main/GeneralClashRule.ini" }
+                ]
+            },
+            {
+                label: "قوانین ACL",
+                options: [
+                    { label: "ACL_نسخه پیش‌فرض", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini" },
+                    { label: "ACL_نسخه بدون تست سرعت", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_NoAuto.ini" },
+                    { label: "ACL_نسخه حذف تبلیغات", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_AdblockPlus.ini" },
+                    { label: "ACL_نسخه چند کشوری", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_MultiCountry.ini" },
+                    { label: "ACL_نسخه بدون Reject", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_NoReject.ini" },
+                    { label: "ACL_نسخه فشرده بدون تست سرعت", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_NoAuto.ini" },
+                    { label: "ACL_نسخه تمام گروه‌ها", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full.ini" },
+                    { label: "ACL_تمام گروه‌ها نسخه گوگل", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_Google.ini" },
+                    { label: "ACL_تمام گروه‌ها نسخه چند حالته", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_MultiMode.ini" },
+                    { label: "ACL_تمام گروه‌ها نسخه نتفلیکس", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_Netflix.ini" },
+                    { label: "ACL_نسخه فشرده", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini.ini" },
+                    { label: "ACL_نسخه فشرده حذف تبلیغات", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_AdblockPlus.ini" },
+                    { label: "ACL_نسخه فشرده Fallback", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_Fallback.ini" },
+                    { label: "ACL_نسخه فشرده چند کشوری", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_MultiCountry.ini" },
+                    { label: "ACL_نسخه فشرده چند حالته", value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_MultiMode.ini" }
+                ]
+            },
+            {
+                label: "قوانین جمع‌آوری شده از سراسر وب",
+                options: [
+                    { label: "قوانین معمولی", value: "https://raw.githubusercontent.com/flyhigherpi/merlinclash_clash_related/master/Rule_config/ZHANG.ini" },
+                    { label: "استفاده شخصی Cool", value: "https://raw.githubusercontent.com/xiaoshenxian233/cool/rule/complex.ini" },
+                    { label: "PharosPro بدون تست سرعت", value: "https://subweb.s3.fr-par.scw.cloud/RemoteConfig/special/phaors.ini" },
+                    { label: "انتقال خودکار خطا بر اساس منطقه", value: "https://raw.githubusercontent.com/flyhigherpi/merlinclash_clash_related/master/Rule_config/ZHANG_Area_Fallback.ini" },
+                    { label: "تست خودکار سرعت بر اساس منطقه", value: "https://raw.githubusercontent.com/flyhigherpi/merlinclash_clash_related/master/Rule_config/ZHANG_Area_Urltest.ini" },
+                    { label: "بدون تست خودکار سرعت بر اساس منطقه", value: "https://raw.githubusercontent.com/flyhigherpi/merlinclash_clash_related/master/Rule_config/ZHANG_Area_NoAuto.ini" },
+                    { label: "OoHHHHHHH", value: "https://raw.githubusercontent.com/OoHHHHHHH/ini/master/config.ini" },
+                    { label: "CFW-TAP", value: "https://raw.githubusercontent.com/OoHHHHHHH/ini/master/cfw-tap.ini" },
+                    { label: "lhl77 تمام گروه‌ها (به‌روزرسانی منظم)", value: "https://raw.githubusercontent.com/lhl77/sub-ini/main/tsutsu-full.ini" },
+                    { label: "lhl77 نسخه ساده (به‌روزرسانی منظم)", value: "https://raw.githubusercontent.com/lhl77/sub-ini/main/tsutsu-mini-gfw.ini" },
+                    { label: "قوانین ConnersHua Shenji Outbound", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_new.ini" },
+                    { label: "قوانین ConnersHua Shenji Inbound مخصوص بازگشت به چین", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_backtocn.ini" },
+                    { label: "قوانین lhie1 Dongzhu (با استفاده از قوانین گروه‌بندی Clash)", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_clash.ini" },
+                    { label: "نسخه کامل قوانین lhie1 Dongzhu", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_dler.ini" },
+                    { label: "قوانین eHpo1", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/ehpo1_main.ini" },
+                    { label: "حالت لیست سفید پیش‌فرض چند استراتژی گروهی", value: "https://raw.nameless13.com/api/public/dl/ROzQqi2S/white.ini" },
+                    { label: "چند استراتژی گروهی می‌تواند به طور موثرتری از فعال شدن حسابرسی جلوگیری کند", value: "https://raw.nameless13.com/api/public/dl/ptLeiO3S/mayinggfw.ini" },
+                    { label: "لیست سفید پیش‌فرض استراتژی ساده", value: "https://raw.nameless13.com/api/public/dl/FWSh3dXz/easy3.ini" },
+                    { label: "افزودن استراتژی SMTP به چند استراتژی", value: "https://raw.nameless13.com/api/public/dl/L_-vxO7I/youtube.ini" },
+                    { label: "توصیه برای مبتدیان بدون استراتژی", value: "https://raw.nameless13.com/api/public/dl/zKF9vFbb/easy.ini" },
+                    { label: "توصیه برای مبتدیان بدون استراتژی با گروه‌بندی کشور", value: "https://raw.nameless13.com/api/public/dl/E69bzCaE/easy2.ini" },
+                    { label: "فقط IPIP CN + Final بدون استراتژی", value: "https://raw.nameless13.com/api/public/dl/XHr0miMg/ipip.ini" },
+                    { label: "گروه‌بندی VIP Maying بدون استراتژی", value: "https://raw.nameless13.com/api/public/dl/BBnfb5lD/MAYINGVIP.ini" },
+                    { label: "پیکربندی اختصاصی Pinyun (فقط گروه‌بندی منطقه هنگ کنگ)", value: "https://raw.githubusercontent.com/Mazeorz/airports/master/Clash/Examine.ini" },
+                    { label: "پیکربندی اختصاصی Pinyun (گروه‌بندی تمام مناطق)", value: "https://raw.githubusercontent.com/Mazeorz/airports/master/Clash/Examine_Full.ini" },
+                    { label: "قوانین nzw9314", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/nzw9314_custom.ini" },
+                    { label: "قوانین maicoo-l", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/maicoo-l_custom.ini" },
+                    { label: "قوانین سفارشی شده DlerCloud Platinum Li Ge", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/dlercloud_lige_platinum.ini" },
+                    { label: "قوانین سفارشی شده DlerCloud Gold Li Ge", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/dlercloud_lige_gold.ini" },
+                    { label: "قوانین سفارشی شده DlerCloud Silver Li Ge", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/dlercloud_lige_silver.ini" },
+                    { label: "استفاده شخصی ProxyStorage", value: "https://unpkg.com/proxy-script/config/Clash/clash.ini" },
+                    { label: "قوانین اصلاح شده ShellClash (توسط UlinoyaPed)", value: "https://github.com/UlinoyaPed/ShellClash/raw/master/rules/ShellClash.ini" }
+                ]
+            },
+            {
+                label: "قوانین فرودگاه‌های بزرگ",
+                options: [
+                    { label: "EXFLUX", value: "https://gist.github.com/jklolixxs/16964c46bad1821c70fa97109fd6faa2/raw/EXFLUX.ini" },
+                    { label: "NaNoport", value: "https://gist.github.com/jklolixxs/32d4e9a1a5d18a92beccf3be434f7966/raw/NaNoport.ini" },
+                    { label: "CordCloud", value: "https://gist.github.com/jklolixxs/dfbe0cf71ffc547557395c772836d9a8/raw/CordCloud.ini" },
+                    { label: "BigAirport", value: "https://gist.github.com/jklolixxs/e2b0105c8be6023f3941816509a4c453/raw/BigAirport.ini" },
+                    { label: "跑路云", value: "https://gist.github.com/jklolixxs/9f6989137a2cfcc138c6da4bd4e4cbfc/raw/PaoLuCloud.ini" },
+                    { label: "WaveCloud", value: "https://gist.github.com/jklolixxs/fccb74b6c0018b3ad7b9ed6d327035b3/raw/WaveCloud.ini" },
+                    { label: "几鸡", value: "https://gist.github.com/jklolixxs/bfd5061dceeef85e84401482f5c92e42/raw/JiJi.ini" },
+                    { label: "四季加速", value: "https://gist.github.com/jklolixxs/6ff6e7658033e9b535e24ade072cf374/raw/SJ.ini" },
+                    { label: "ImmTelecom", value: "https://gist.github.com/jklolixxs/24f4f58bb646ee2c625803eb916fe36d/raw/ImmTelecom.ini" },
+                    { label: "AmyTelecom", value: "https://gist.githubusercontent.com/jklolixxs/b53d315cd1cede23af83322c26ce34ec/raw/AmyTelecom.ini" },
+                    { label: "LinkCube", value: "https://subweb.s3.fr-par.scw.cloud/RemoteConfig/customized/convenience.ini" },
+                    { label: "Miaona", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/Miaona.ini" },
+                    { label: "Foo&Friends", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/Foo&Friends.ini" },
+                    { label: "ABCloud", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/ABCloud.ini" },
+                    { label: "咸鱼", value: "https://raw.githubusercontent.com/SleepyHeeead/subconverter-config/master/remote-config/customized/xianyu.ini" },
+                    { label: "便利店", value: "https://subweb.oss-cn-hongkong.aliyuncs.com/RemoteConfig/customized/convenience.ini" },
+                    { label: "CNIX", value: "https://raw.githubusercontent.com/Mazeorz/airports/master/Clash/SSRcloud.ini" },
+                    { label: "Nirvana", value: "https://raw.githubusercontent.com/Mazetsz/ACL4SSR/master/Clash/config/V2rayPro.ini" },
+                    { label: "V2Pro", value: "https://raw.githubusercontent.com/Mazeorz/airports/master/Clash/V2Pro.ini" },
+                    { label: "史迪仔-تست خودکار سرعت", value: "https://raw.githubusercontent.com/Mazeorz/airports/master/Clash/Stitch.ini" },
+                    { label: "史迪仔-توازن بار", value: "https://raw.githubusercontent.com/Mazeorz/airports/master/Clash/Stitch-Balance.ini" },
+                    { label: "Maying", value: "https://raw.githubusercontent.com/SleepyHeeead/subconverter-config/master/remote-config/customized/maying.ini" },
+                    { label: "Ytoo", value: "https://subweb.s3.fr-par.scw.cloud/RemoteConfig/customized/ytoo.ini" },
+                    { label: "w8ves", value: "https://raw.nameless13.com/api/public/dl/M-We_Fn7/w8ves.ini" },
+                    { label: "NyanCAT", value: "https://raw.githubusercontent.com/SleepyHeeead/subconverter-config/master/remote-config/customized/nyancat.ini" },
+                    { label: "Nexitally", value: "https://subweb.s3.fr-par.scw.cloud/RemoteConfig/customized/nexitally.ini" },
+                    { label: "SoCloud", value: "https://raw.githubusercontent.com/SleepyHeeead/subconverter-config/master/remote-config/customized/socloud.ini" },
+                    { label: "ARK", value: "https://raw.githubusercontent.com/SleepyHeeead/subconverter-config/master/remote-config/customized/ark.ini" },
+                    { label: "N3RO", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/n3ro_optimized.ini" },
+                    { label: "Scholar", value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/scholar_optimized.ini" },
+                    { label: "Flowercloud", value: "https://subweb.s3.fr-par.scw.cloud/RemoteConfig/customized/flower.ini" }
+                ]
+            },
+            {
+                label: "ویژه",
+                options: [
+                    { label: "NeteaseUnblock", value: "https://raw.githubusercontent.com/SleepyHeeead/subconverter-config/master/remote-config/special/netease.ini" },
+                    { label: "پایه", value: "https://raw.githubusercontent.com/SleepyHeeead/subconverter-config/master/remote-config/special/basic.ini" }
+                ]
+            }
+        ];
+        
+        // Short Link Backends (Added based on previous Vue.js template)
+        // Removed as per user request
+        // const shortLinkBackends = [
+        //     { label: "v1.mk", value: "https://v1.mk/short" },
+        //     { label: "d1.mk", value: "https://d1.mk/short" },
+        //     { label: "dlj.tf", value: "https://dlj.tf/short" },
+        //     { label: "suo.yt", value: "https://suo.yt/short" },
+        //     { label: "sub.cm", value: "https://sub.cm/short" },
+        // ];
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get elements for API URL
+            const apiUrlSelect = document.getElementById('api-url-select');
+            const apiUrlCustom = document.getElementById('api-url-custom');
+            const apiUrlCustomToggle = document.getElementById('api-url-custom-toggle');
+
+            // Get elements for Remote Config
+            const configSelect = document.getElementById('config-select');
+            const configCustom = document.getElementById('config-custom');
+            const configCustomToggle = document.getElementById('config-custom-toggle');
+            
+            // Short Link elements are now removed from HTML, so no need to get them here.
+            // const shortLinkSelect = document.getElementById('short-link-select');
+            // const shortLinkCustom = document.getElementById('short-link-custom');
+            // const shortLinkCustomToggle = document.getElementById('short-link-custom-toggle');
+
+            // Populate API Backends Select
+            if (apiUrlSelect) {
+                apiBackends.forEach(backend => {
+                    const option = document.createElement('option');
+                    option.value = backend.value;
+                    option.textContent = backend.label;
+                    apiUrlSelect.appendChild(option);
+                });
+                // Set default value for API URL select
+                apiUrlSelect.value = "https://url.v1.mk/sub";
+            }
+
+            // Populate Remote Configs Select
+            if (configSelect) {
+                // Add the new "مخصوص ایران" option first
+                const iranConfigOption = document.createElement('option');
+                iranConfigOption.value = "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/ACL4SSR/vpnclashfa.ini";
+                iranConfigOption.textContent = "مخصوص ایران";
+                configSelect.appendChild(iranConfigOption);
+
+                remoteConfigs.forEach(group => {
+                    group.options.forEach(config => {
+                        const option = document.createElement('option');
+                        option.value = config.value;
+                        option.textContent = `${group.label} - ${config.label}`;
+                        configSelect.appendChild(option);
+                    });
+                });
+                // Set default value for Remote Config select to "مخصوص ایران"
+                configSelect.value = "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/ACL4SSR/vpnclashfa.ini";
+            }
+            
+            // Short Link Select population is now removed.
+            // if (shortLinkSelect) {
+            //     shortLinkBackends.forEach(shortLink => {
+            //         const option = document.createElement('option');
+            //         option.value = shortLink.value;
+            //         option.textContent = shortLink.label;
+            //         shortLinkSelect.appendChild(option);
+            //     });
+            //     shortLinkSelect.value = "https://v1.mk/short";
+            // }
+
+            // Function to handle toggle logic
+            function setupToggle(selectElement, customInputElement, toggleCheckbox) {
+                toggleCheckbox.addEventListener('change', () => {
+                    if (toggleCheckbox.checked) {
+                        selectElement.classList.add('hidden');
+                        customInputElement.classList.remove('hidden');
+                        customInputElement.value = ''; // Keep empty for user to type
+                    } else {
+                        selectElement.classList.remove('hidden');
+                        customInputElement.classList.add('hidden');
+                        customInputElement.value = ''; // Clear custom input when toggled back
+                    }
+                });
+            }
+
+            // Apply toggle logic to dynamic input fields
+            if (apiUrlSelect && apiUrlCustom && apiUrlCustomToggle) {
+                setupToggle(apiUrlSelect, apiUrlCustom, apiUrlCustomToggle);
+            }
+            if (configSelect && configCustom && configCustomToggle) {
+                setupToggle(configSelect, configCustom, configCustomToggle);
+            }
+            // Short Link toggle setup is now removed.
+            // if (shortLinkSelect && shortLinkCustom && shortLinkCustomToggle) {
+            //     setupToggle(shortLinkSelect, shortLinkCustom, shortLinkCustomToggle);
+            // }
+
+            // Toggle Advanced Features Section
+            const toggleAdvancedBtn = document.getElementById('toggle-advanced-btn');
+            const advancedFeaturesSection = document.getElementById('advanced-features-section');
+
+            if (toggleAdvancedBtn && advancedFeaturesSection) {
+                toggleAdvancedBtn.addEventListener('click', () => {
+                    advancedFeaturesSection.classList.toggle('hidden-section');
+                });
+            }
+        });
+
 
         // --- منطق اصلی دکمه‌ها ---
         const generateBtn = document.getElementById('generate-btn');
         const outputUrlField = document.getElementById('output-url');
         const copyBtn = document.getElementById('copy-btn');
         const downloadBtn = document.getElementById('download-btn');
+
+        // Input elements
+        const subUrlInput = document.getElementById('sub-url');
+        const outputFilenameInput = document.getElementById('output-filename');
+        const emojiCheckbox = document.getElementById('emoji');
+        const includeRemarksInput = document.getElementById('include-remarks');
+        const excludeRemarksInput = document.getElementById('exclude-remarks');
+        // Advanced input elements
+        const nodeRenameInput = document.getElementById('node-rename');
+        const remoteDeviceIdInput = document.getElementById('remote-device-id');
+        const nodeListOnlyCheckbox = document.getElementById('node-list-only');
+
 
         if (generateBtn) {
             generateBtn.addEventListener('click', async function() {
@@ -375,7 +844,7 @@
                     let timeLeftMessage = "";
                     if (remainingHours > 0) {
                         timeLeftMessage = `حدود ${remainingHours} ساعت`;
-                        if (remainingMinutes > 0 && remainingHours < 2 && totalRemainingSeconds < 7200) { // اگر کمتر از ۲ ساعت بود و دقیقه هم داشت
+                        if (remainingMinutes > 0 && remainingHours < 2 && totalRemainingSeconds < 7200) {
                            timeLeftMessage = `حدود ${Math.floor(totalRemainingSeconds / 60)} دقیقه`;
                         } else if (remainingMinutes > 0) {
                            timeLeftMessage += ` و ${remainingMinutes} دقیقه`;
@@ -385,65 +854,123 @@
                     } else {
                         timeLeftMessage = "کمتر از یک دقیقه";
                     }
-                    alert(`شما به دلیل تعداد زیاد درخواست، موقتاً برای ${timeLeftMessage} دیگر نمی‌توانید از این قابلیت استفاده کنید.`);
-                    return; 
+                    showMessage(`شما به دلیل تعداد زیاد درخواست، موقتاً برای ${timeLeftMessage} دیگر نمی‌توانید از این قابلیت استفاده کنید.`, 'error');
+                    return;
                 }
 
                 if (currentTime - rateData.windowStart > TIME_WINDOW_CLIENT_MS || (rateData.blockedUntil && currentTime > rateData.blockedUntil)) {
-                    rateData.clicks = 0; rateData.windowStart = currentTime; rateData.blockedUntil = 0; 
+                    rateData.clicks = 0; rateData.windowStart = currentTime; rateData.blockedUntil = 0;
                 }
                 rateData.clicks++;
                 console.log(`Client clicks: ${rateData.clicks} in window. Window started: ${new Date(rateData.windowStart).toLocaleTimeString()}`);
                 if (rateData.clicks > MAX_CLICKS_CLIENT) {
-                    alert(`شما بیش از ${MAX_CLICKS_CLIENT} بار در یک ساعت درخواست داده‌اید. لطفاً حدود ۲ ساعت دیگر دوباره امتحان کنید.`);
+                    showMessage(`شما بیش از ${MAX_CLICKS_CLIENT} بار در یک ساعت درخواست داده‌اید. لطفاً حدود ۲ ساعت دیگر دوباره امتحان کنید.`, 'error', 5000);
                     rateData.blockedUntil = currentTime + TIMEOUT_DURATION_CLIENT_MS;
                     setRateLimitData(rateData);
                     if(outputUrlField) outputUrlField.value = 'محدودیت استفاده اعمال شد.';
-                    return; 
+                    return;
                 }
                 setRateLimitData(rateData);
 
                 const useCustomWorker = document.getElementById('use_custom_base64_worker').checked;
-                const subUrlInput = document.getElementById('sub-url').value.trim();
-                const mainConverterApiUrl = document.getElementById('api-url').value.trim(); 
+                const subUrl = subUrlInput.value.trim();
 
-                if (!subUrlInput) { alert('لطفاً حداقل یک لینک اشتراک وارد کنید.'); return; }
+                // Get API URL based on toggle state
+                const apiUrlSelect = document.getElementById('api-url-select');
+                const apiUrlCustom = document.getElementById('api-url-custom');
+                const apiUrlCustomToggle = document.getElementById('api-url-custom-toggle');
+                const mainConverterApiUrl = apiUrlCustomToggle.checked ? apiUrlCustom.value.trim() : apiUrlSelect.value;
+
+                // Get Remote Config URL based on toggle state
+                const configSelect = document.getElementById('config-select');
+                const configCustom = document.getElementById('config-custom');
+                const configCustomToggle = document.getElementById('config-custom-toggle');
+                const remoteConfigUrl = configCustomToggle.checked ? configCustom.value.trim() : configSelect.value;
+                
+                // shortTypeUrl is no longer captured from UI as the field is removed.
+                // const shortLinkSelect = document.getElementById('short-link-select');
+                // const shortLinkCustom = document.getElementById('short-link-custom');
+                // const shortLinkCustomToggle = document.getElementById('short-link-custom-toggle');
+                // const shortTypeUrl = shortLinkCustomToggle.checked ? shortLinkCustom.value.trim() : shortLinkSelect.value;
+
+
+                if (!subUrl) { showMessage('لطفاً حداقل یک لینک اشتراک وارد کنید.', 'error'); return; }
 
                 const target = document.getElementById('target').value;
-                const configInput = document.getElementById('config').value.trim();
+                const filenameValue = outputFilenameInput ? outputFilenameInput.value.trim() : '';
+                const emojiEnabled = emojiCheckbox ? emojiCheckbox.checked : true;
+                const includeRemarksValue = includeRemarksInput ? includeRemarksInput.value.trim() : '';
+                const excludeRemarksValue = excludeRemarksInput ? excludeRemarksInput.value.trim() : '';
+                const nodeRenameValue = nodeRenameInput ? nodeRenameInput.value.trim() : '';
+                const remoteDeviceIdValue = remoteDeviceIdInput ? remoteDeviceIdInput.value.trim() : '';
+                const nodeListOnlyEnabled = nodeListOnlyCheckbox ? nodeListOnlyCheckbox.checked : false;
+
+
                 const options = {};
                 document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => {
-                    if (cb.id !== 'use_custom_base64_worker') { options[cb.id] = cb.checked; }
+                    if (cb.id !== 'use_custom_base64_worker' && cb.id !== 'emoji' && cb.id !== 'node-list-only') { // Exclude specific advanced options
+                        options[cb.id] = cb.checked;
+                    }
                 });
-                options['list'] = 'false'; 
+                options['list'] = nodeListOnlyEnabled; // 'list' parameter for "f_un"
+                options['emoji'] = emojiEnabled;
 
                 if(outputUrlField) outputUrlField.value = 'در حال پردازش...';
 
+                // If using the custom worker, pass all parameters
                 if (useCustomWorker) {
-                    const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev'; 
+                    const workerUrl = 'https://my-sub-proxy-worker.tenium.workers.dev';
                     try {
                         const response = await fetch(workerUrl, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ subUrl: subUrlInput, target: target, config: configInput || null, options: options })
+                            body: JSON.stringify({
+                                subUrl: subUrl,
+                                target: target,
+                                config: remoteConfigUrl || null,
+                                filename: filenameValue || null,
+                                include: includeRemarksValue || null,
+                                exclude: excludeRemarksValue || null,
+                                rename: nodeRenameValue || null,
+                                dev_id: remoteDeviceIdValue || null,
+                                list: nodeListOnlyEnabled,
+                                options: options,
+                                // shortType: shortTypeUrl || null // Removed as short link field is removed
+                            })
                         });
                         const responseData = await response.json();
                         if (!response.ok) { throw new Error(responseData.error || `خطا از سرور واسط: ${response.status} ${response.statusText}`); }
                         if(outputUrlField) outputUrlField.value = responseData.finalUrl;
+                        showMessage('لینک اشتراک با موفقیت تولید شد!', 'success');
                     } catch (error) {
-                        alert(`خطا در ارتباط با سرور واسط: ${error.message}`);
+                        showMessage(`خطا در ارتباط با سرور واسط: ${error.message}`, 'error', 7000);
                         if(outputUrlField) outputUrlField.value = '';
                     }
                 } else {
-                    if (!mainConverterApiUrl) { alert('لطفاً آدرس سرویس مبدل (API) را وارد کنید.'); if(outputUrlField) outputUrlField.value = ''; return; }
+                    // Direct API call
+                    if (!mainConverterApiUrl) { showMessage('لطفاً آدرس سرویس مبدل (API) را وارد کنید.', 'error'); if(outputUrlField) outputUrlField.value = ''; return; }
+                    
                     const baseUrl = mainConverterApiUrl.endsWith('?') ? mainConverterApiUrl : mainConverterApiUrl + '?';
                     const params = new URLSearchParams();
-                    params.append('url', subUrlInput);
+                    params.append('url', subUrl);
                     params.append('target', target);
-                    if (configInput) { params.append('config', configInput); }
-                    for (const key in options) { if (options.hasOwnProperty(key)) { params.append(key, options[key]); } }
+                    if (remoteConfigUrl) { params.append('config', remoteConfigUrl); }
+                    if (filenameValue) { params.append('filename', filenameValue); }
+                    if (includeRemarksValue) { params.append('include', includeRemarksValue); }
+                    if (excludeRemarksValue) { params.append('exclude', excludeRemarksValue); }
+                    if (nodeRenameValue) { params.append('rename', nodeRenameValue); }
+                    if (remoteDeviceIdValue) { params.append('dev_id', remoteDeviceIdValue); }
+                    
+                    params.append('list', nodeListOnlyEnabled.toString());
+
+                    for (const key in options) {
+                        if (options.hasOwnProperty(key)) {
+                            params.append(key, options[key]);
+                        }
+                    }
                     const finalUrl = baseUrl + params.toString();
                     if(outputUrlField) outputUrlField.value = finalUrl;
+                    showMessage('لینک اشتراک با موفقیت تولید شد!', 'success');
                 }
             });
         } else { console.error("Generate button ('generate-btn') not found!"); }
@@ -455,19 +982,14 @@
                     currentOutputUrlField.select();
                     currentOutputUrlField.setSelectionRange(0, 99999);
                     try {
-                         navigator.clipboard.writeText(currentOutputUrlField.value).then(function() {
-                             alert('لینک با موفقیت کپی شد!');
-                         }, function(errCb) { // Renamed err to errCb
-                            try { document.execCommand('copy'); alert('لینک با موفقیت کپی شد! (Fallback)'); } 
-                            catch (e) { alert('خطا در کپی کردن لینک. لطفاً دستی کپی کنید.'); }
-                         });
-                    } catch (err) { // Main try...catch error
-                        try { document.execCommand('copy'); alert('لینک با موفقیت کپی شد! (Fallback)'); } 
-                        catch (e) { alert('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.'); }
+                        document.execCommand('copy');
+                        showMessage('لینک با موفقیت کپی شد!', 'success');
+                    } catch (err) {
+                        showMessage('مرورگر شما از کپی خودکار پشتیبانی نمی‌کند. لطفاً دستی کپی کنید.', 'error');
                     }
                 } else if (currentOutputUrlField && (currentOutputUrlField.value === 'در حال پردازش...' || currentOutputUrlField.value === 'محدودیت استفاده اعمال شد.')) {
-                    alert('لطفاً تا پایان عملیات یا رفع محدودیت صبر کنید.');
-                } else { alert('هنوز لینکی تولید نشده است.'); }
+                    showMessage('لطفاً تا پایان عملیات یا رفع محدودیت صبر کنید.', 'info');
+                } else { showMessage('هنوز لینکی تولید نشده است.', 'info'); }
             });
         } else { console.error("Copy button ('copy-btn') not found!"); }
 
@@ -477,34 +999,38 @@
                 const outputUrl = currentOutputUrlField ? currentOutputUrlField.value : '';
 
                 if (!outputUrl || outputUrl === 'در حال پردازش...' || outputUrl === 'محدودیت استفاده اعمال شد.') {
-                    alert('ابتدا یک لینک معتبر تولید کنید تا بتوانید محتوای آن را دانلود کنید.');
+                    showMessage('ابتدا یک لینک معتبر تولید کنید تا بتوانید محتوای آن را دانلود کنید.', 'info');
                     return;
                 }
 
-                let filename = "subscription.txt"; // نام پیش‌فرض
+                let filename = outputFilenameInput && outputFilenameInput.value.trim() !== '' ? outputFilenameInput.value.trim() : "subscription.txt";
                 const targetSelect = document.getElementById('target');
                 if (targetSelect) {
                     const targetValue = targetSelect.value;
-                    if (targetValue.includes('clash')) filename = "clash_config.yaml";
-                    else if (targetValue.includes('v2ray')) filename = "v2ray_config.txt";
-                    // می‌توانید موارد بیشتری برای سایر target ها اضافه کنید
+                    if (targetValue.includes('clash')) {
+                        if (!filename.endsWith('.yaml') && !filename.endsWith('.yml')) {
+                            filename = filename.split('.')[0] + '.yaml';
+                        }
+                    }
+                    else if (targetValue.includes('v2ray')) {
+                        if (!filename.endsWith('.txt')) {
+                            filename = filename.split('.')[0] + '.txt';
+                        }
+                    }
                 }
-                
-                // پیام انتظار برای دانلود
+
                 const originalButtonText = downloadBtn.textContent;
                 downloadBtn.textContent = 'در حال دانلود...';
                 downloadBtn.disabled = true;
 
                 try {
                     console.log(`Attempting to download content from: ${outputUrl}`);
-                    // نکته: اگر outputUrl به دامنه دیگری (مثل url.v1.mk مستقیم) باشد و آن دامنه CORS را برای سایت شما مجاز نکرده باشد، این fetch با خطای CORS مواجه خواهد شد.
-                    // این قابلیت وقتی که از Worker خودتان استفاده می‌کنید (که CORS را برای سایت شما مجاز کرده) بهتر کار می‌کند.
                     const response = await fetch(outputUrl);
                     if (!response.ok) {
                         throw new Error(`خطا در دریافت محتوای لینک: ${response.status} ${response.statusText}`);
                     }
                     const content = await response.text();
-                    
+
                     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
@@ -512,12 +1038,12 @@
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                    URL.revokeObjectURL(link.href); 
-                    alert(`دانلود فایل '${filename}' شروع شد.`);
+                    URL.revokeObjectURL(link.href);
+                    showMessage(`دانلود فایل '${filename}' شروع شد.`, 'success');
 
                 } catch (error) {
                     console.error('Download error:', error);
-                    alert(`خطا در دانلود فایل: ${error.message}\n\nاین مشکل ممکن است به دلیل محدودیت‌های CORS از سمت سرور لینک تولید شده باشد. اگر از گزینه "تبدیل به بیس ۶۴" استفاده نکرده‌اید، این قابلیت ممکن است کار نکند. در این صورت، لینک را کپی کرده و مستقیماً در مرورگر باز کنید و محتوا را ذخیره نمایید.`);
+                    showMessage(`خطا در دانلود فایل: ${error.message}\n\nاین مشکل ممکن است به دلیل محدودیت‌های CORS از سمت سرور لینک تولید شده باشد. اگر از گزینه "تبدیل به بیس ۶۴" استفاده نکرده‌اید، این قابلیت ممکن است کار نکند. در این صورت، لینک را کپی کرده و مستقیماً در مرورگر باز کنید و محتوا را ذخیره نمایید.`, 'error', 10000);
                 } finally {
                     downloadBtn.textContent = originalButtonText;
                     downloadBtn.disabled = false;
